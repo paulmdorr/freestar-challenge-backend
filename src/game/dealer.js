@@ -3,7 +3,6 @@ import FaceDownCard from './faceDownCard.js';
 import Player from './player.js';
 
 class Dealer extends Player {
-  #faceDownCard;
   #deck;
 
   constructor() {
@@ -15,8 +14,7 @@ class Dealer extends Player {
 
   addCard(card) {
     if (this.hand.length === 1) {
-      this.#faceDownCard = card;
-      super.addCard(new FaceDownCard());
+      super.addCard(new FaceDownCard(card));
     } else {
       super.addCard(card);
     }
@@ -24,6 +22,10 @@ class Dealer extends Player {
 
   dealCard(player) {
     player.addCard(this.#deck.getNextCard());
+  }
+
+  revealFaceDownCard() {
+    return this.hand[1].flip();
   }
 }
 
