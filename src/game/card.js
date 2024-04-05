@@ -1,4 +1,7 @@
 class Card {
+  _rank;
+  _suit;
+
   constructor(rank, suit) {
     if (!rank || !suit) throw new Error('Rank and suit are required!');
 
@@ -8,8 +11,16 @@ class Card {
 
     if (!CARD_SUITS[suit.toUpperCase()]) throw new Error('Invalid suit!');
 
-    this.rank = rank;
-    this.suit = suit;
+    this._rank = rank;
+    this._suit = suit;
+  }
+
+  get rank() {
+    return this._rank;
+  }
+
+  get suit() {
+    return this._suit;
   }
 }
 

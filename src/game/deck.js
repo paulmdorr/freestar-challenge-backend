@@ -1,25 +1,35 @@
 import Card, { CARD_SUITS, VALID_RANKS } from './card.js';
 
 class Deck {
+  #cards;
+
   constructor() {
     this.#initializeDeck();
   }
 
   #initializeDeck() {
-    this.cards = [];
+    this.#cards = [];
 
     for (const suit of Object.values(CARD_SUITS)) {
       for (const value of VALID_RANKS) {
-        this.cards.push(new Card(value, suit));
+        this.#cards.push(new Card(value, suit));
       }
     }
   }
 
   shuffle() {
-    for (let i = this.cards.length - 1; i > 0; i--) {
+    for (let i = this.#cards.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
+      [this.#cards[i], this.#cards[j]] = [this.#cards[j], this.#cards[i]];
     }
+  }
+
+  getNextCard() {
+    return this.#cards.pop();
+  }
+
+  get cards() {
+    return [...this.#cards];
   }
 }
 
