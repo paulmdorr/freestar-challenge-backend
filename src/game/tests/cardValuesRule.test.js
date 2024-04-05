@@ -29,3 +29,13 @@ test('returns the correct value for a number card', (t) => {
   t.is(rule.value('3'), 3);
   t.is(rule.value('2'), 2);
 });
+
+test('throws an error if card is invalid', (t) => {
+  const rule = new CardValuesRule();
+
+  const error = t.throws(() => {
+    rule.value('X');
+  });
+
+  t.is(error.message, 'Invalid card!');
+});
