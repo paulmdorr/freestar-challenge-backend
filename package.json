@@ -1,0 +1,38 @@
+{
+  "name": "blackjack-api",
+  "version": "0.0.1",
+  "description": "An API for a blackjack game",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon src/server.js",
+    "test": "ava",
+    "test:coverage": "c8 ava",
+    "test:watch": "ava --watch",
+    "prepare": "husky"
+  },
+  "author": "Pablo M Dorr",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "install": "^0.13.0",
+    "npm": "^10.5.1",
+    "pino-http": "^9.0.0"
+  },
+  "devDependencies": {
+    "ava": "^6.1.2",
+    "c8": "^9.1.0",
+    "dotenv": "^16.4.5",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "nodemon": "^3.1.0",
+    "pino-http-print": "^3.1.0",
+    "pino-pretty": "^11.0.0",
+    "prettier": "^3.2.5",
+    "supertest": "^6.3.4"
+  }
+}
