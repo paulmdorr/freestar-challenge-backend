@@ -1,7 +1,7 @@
 import { VALID_RANKS } from './card.js';
 
 class CardValuesRule {
-  value(card, total) {
+  static getValue(card, total) {
     if (!VALID_RANKS.includes(card)) {
       throw new Error('Invalid card!');
     }
