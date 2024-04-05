@@ -27,9 +27,10 @@ test('can get the next card from a deck', (t) => {
 
 test("can't change the cards in a deck", (t) => {
   const deck = new Deck();
-  const cards = deck.cards;
 
-  cards.pop();
+  const error = t.throws(() => {
+    deck.cards.pop();
+  });
 
-  t.is(deck.cards.length, 52);
+  t.is(error.message, "Cannot delete property '51' of [object Array]");
 });
