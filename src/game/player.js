@@ -3,9 +3,7 @@ class Player {
   #hand;
 
   constructor(name) {
-    if (!name || !name.trim()) {
-      throw new Error('Name is required!');
-    }
+    this.#checkName(name);
 
     this.#name = name;
     this.#hand = Object.freeze([]);
@@ -21,6 +19,12 @@ class Player {
 
   addCard(card) {
     this.#hand = Object.freeze([...this.#hand, card]);
+  }
+
+  #checkName(name) {
+    if (!name || !name.trim()) {
+      throw new Error('Name is required!');
+    }
   }
 }
 

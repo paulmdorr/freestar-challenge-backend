@@ -3,13 +3,7 @@ class Card {
   _suit;
 
   constructor(rank, suit) {
-    if (!rank || !suit) throw new Error('Rank and suit are required!');
-
-    if (!VALID_RANKS.includes(rank)) {
-      throw new Error('Invalid rank!');
-    }
-
-    if (!CARD_SUITS[suit.toUpperCase()]) throw new Error('Invalid suit!');
+    this.#checkRankAndSuit(rank, suit);
 
     this._rank = rank;
     this._suit = suit;
@@ -21,6 +15,16 @@ class Card {
 
   get suit() {
     return this._suit;
+  }
+
+  #checkRankAndSuit(rank, suit) {
+    if (!rank || !suit) throw new Error('Rank and suit are required!');
+
+    if (!VALID_RANKS.includes(rank)) {
+      throw new Error('Invalid rank!');
+    }
+
+    if (!CARD_SUITS[suit.toUpperCase()]) throw new Error('Invalid suit!');
   }
 }
 
