@@ -1,15 +1,13 @@
-import Deck from './deck.js';
 import FaceDownCard from './faceDownCard.js';
 import Player from './player.js';
 
 class Dealer extends Player {
   #deck;
 
-  constructor() {
+  constructor(deck) {
     super('Dealer');
 
-    this.#deck = new Deck();
-    this.#deck.shuffle();
+    this.#deck = deck;
   }
 
   addCard(card) {

@@ -1,15 +1,14 @@
 import Dealer from './dealer.js';
-import Deck from './deck.js';
 import Player from './player.js';
+import PointsRule, { WINNER_TYPE } from './pointsRule.js';
 
 class Game {
-  constructor(playerName) {
-    this.player = new Player(playerName);
-    this.dealer = new Dealer('Dealer');
-    this.deck = new Deck();
-    this.deck.shuffle();
-    this.#dealInitialCards();
+  constructor(playerName, deck) {
     this.state = GAME_STATE.PLAYER_TURN;
+    this.winner = null;
+    this.player = new Player(playerName);
+    this.dealer = new Dealer(deck);
+    this.#dealInitialCards();
   }
 
   #dealInitialCards() {
@@ -17,6 +16,11 @@ class Game {
     this.dealer.dealCard(this.dealer);
     this.dealer.dealCard(this.player);
     this.dealer.dealCard(this.dealer);
+
+    if (PointsRule.isBlackjack(this.player.hand)) {
+      this.state = GAME_STATE.GAME_OVER;
+      this.winner = WINNER_TYPE.PLAYER;
+    }
   }
 
   playerHit() {

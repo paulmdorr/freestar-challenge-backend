@@ -1,21 +1,12 @@
-import Card, { CARD_SUITS, CARD_RANKS } from './card.js';
-
 class Deck {
   #cards;
 
-  constructor() {
-    this.#initializeDeck();
+  constructor(cards) {
+    this.#initializeDeck(cards);
   }
 
-  #initializeDeck() {
-    this.#cards = [];
-
-    for (const suit of Object.values(CARD_SUITS)) {
-      for (const value of Object.values(CARD_RANKS)) {
-        this.#cards.push(new Card(value, suit));
-      }
-    }
-
+  #initializeDeck(cards) {
+    this.#cards = cards;
     Object.freeze(this.#cards);
   }
 

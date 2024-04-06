@@ -3,16 +3,17 @@ import Dealer from '../dealer.js';
 import FaceDownCard from '../faceDownCard.js';
 import Player from '../player.js';
 import Card from '../card.js';
+import DeckFactory from '../deckFactory.js';
 
 test('can create a dealer', (t) => {
-  const dealer = new Dealer();
+  const dealer = new Dealer(DeckFactory.createDeck());
 
   t.is(dealer.name, 'Dealer');
   t.deepEqual(dealer.hand, []);
 });
 
 test('second card dealt to dealer is face down', (t) => {
-  const dealer = new Dealer();
+  const dealer = new Dealer(DeckFactory.createDeck());
 
   dealer.dealCard(dealer);
   dealer.dealCard(dealer);
@@ -21,7 +22,7 @@ test('second card dealt to dealer is face down', (t) => {
 });
 
 test('dealer can deal a card', (t) => {
-  const dealer = new Dealer();
+  const dealer = new Dealer(DeckFactory.createDeck());
   const player = new Player('Player 1');
 
   dealer.dealCard(player);
@@ -30,7 +31,7 @@ test('dealer can deal a card', (t) => {
 });
 
 test('dealer can reveal face down card', (t) => {
-  const dealer = new Dealer();
+  const dealer = new Dealer(DeckFactory.createDeck());
 
   dealer.dealCard(dealer);
   dealer.dealCard(dealer);
