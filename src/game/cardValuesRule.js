@@ -1,8 +1,8 @@
-import { VALID_RANKS } from './card.js';
+import { CARD_RANKS } from './card.js';
 
 class CardValuesRule {
   static getValue(card, total) {
-    if (!VALID_RANKS.includes(card)) {
+    if (!Object.values(CARD_RANKS).includes(card)) {
       throw new Error('Invalid card!');
     }
 

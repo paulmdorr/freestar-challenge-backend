@@ -20,7 +20,7 @@ class Card {
   #checkRankAndSuit(rank, suit) {
     if (!rank || !suit) throw new Error('Rank and suit are required!');
 
-    if (!VALID_RANKS.includes(rank)) {
+    if (!Object.values(CARD_RANKS).includes(rank)) {
       throw new Error('Invalid rank!');
     }
 
@@ -35,21 +35,21 @@ const CARD_SUITS = Object.freeze({
   CLUBS: 'clubs',
 });
 
-const VALID_RANKS = Object.freeze([
-  'A',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '10',
-  'J',
-  'Q',
-  'K',
-]);
+const CARD_RANKS = Object.freeze({
+  TWO: '2',
+  THREE: '3',
+  FOUR: '4',
+  FIVE: '5',
+  SIX: '6',
+  SEVEN: '7',
+  EIGHT: '8',
+  NINE: '9',
+  TEN: '10',
+  J: 'J',
+  Q: 'Q',
+  K: 'K',
+  A: 'A',
+});
 
 export default Card;
-export { CARD_SUITS, VALID_RANKS };
+export { CARD_SUITS, CARD_RANKS };

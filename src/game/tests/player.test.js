@@ -1,6 +1,6 @@
 import test from 'ava';
 import Player from '../player.js';
-import Card, { CARD_SUITS, VALID_RANKS } from '../card.js';
+import Card, { CARD_SUITS, CARD_RANKS } from '../card.js';
 
 test('can create a player', (t) => {
   const player = new Player('Player 1');
@@ -71,7 +71,7 @@ test("can't modify the hand directly", (t) => {
   const player = new Player('Player 1');
 
   const error = t.throws(() => {
-    player.hand.push(new Card(VALID_RANKS[0], CARD_SUITS.HEARTS));
+    player.hand.push(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
   });
 
   t.is(error.message, 'Cannot add property 0, object is not extensible');
@@ -79,7 +79,7 @@ test("can't modify the hand directly", (t) => {
 
 test('can add a card to the hand', (t) => {
   const player = new Player('Player 1');
-  const card = new Card(VALID_RANKS[0], CARD_SUITS.HEARTS);
+  const card = new Card(CARD_RANKS.A, CARD_SUITS.HEARTS);
 
   player.addCard(card);
 
@@ -89,8 +89,8 @@ test('can add a card to the hand', (t) => {
 test('can add multiple cards to the hand', (t) => {
   const player = new Player('Player 1');
   const cards = [
-    new Card(VALID_RANKS[0], CARD_SUITS.HEARTS),
-    new Card(VALID_RANKS[1], CARD_SUITS.HEARTS),
+    new Card(CARD_RANKS.A, CARD_SUITS.HEARTS),
+    new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS),
   ];
 
   player.addCard(cards[0]);

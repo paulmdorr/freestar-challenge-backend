@@ -1,4 +1,4 @@
-import Card, { CARD_SUITS, VALID_RANKS } from './card.js';
+import Card, { CARD_SUITS, CARD_RANKS } from './card.js';
 
 class Deck {
   #cards;
@@ -11,7 +11,7 @@ class Deck {
     this.#cards = [];
 
     for (const suit of Object.values(CARD_SUITS)) {
-      for (const value of VALID_RANKS) {
+      for (const value of Object.values(CARD_RANKS)) {
         this.#cards.push(new Card(value, suit));
       }
     }
