@@ -9,9 +9,9 @@ class PointsRule {
   }
 
   static decideWinner(player, dealer) {
-    if (this.#playerWins(player, dealer)) {
+    if (player.winsByBlackjackOrPoints(dealer)) {
       return WINNER_TYPE.PLAYER;
-    } else if (this.#dealerWins(player, dealer)) {
+    } else if (dealer.winsByBlackjackOrPoints(player)) {
       return WINNER_TYPE.DEALER;
     } else {
       return WINNER_TYPE.TIE;
@@ -26,30 +26,6 @@ class PointsRule {
     const hand = player.handWithRevealedFacedownCard;
 
     return hand.length === 2 && this.calculatePoints(hand) === 21;
-  }
-
-  static #playerWins(player, dealer) {
-    return this.#playerOneWins(player, dealer);
-  }
-
-  static #dealerWins(player, dealer) {
-    return this.#playerOneWins(dealer, player);
-  }
-
-  static #playerOneWins(playerOne, playerTwo) {
-    return (
-      !this.isBust(playerOne.hand) &&
-      (this.isBust(playerTwo.hand) ||
-        this.#playerOneWinsByPoints(playerOne, playerTwo) ||
-        playerOne.winsByBlackjack(playerTwo))
-    );
-  }
-
-  static #playerOneWinsByPoints(playerOne, playerTwo) {
-    return (
-      this.calculatePoints(playerOne.hand) >
-      this.calculatePoints(playerTwo.hand)
-    );
   }
 }
 

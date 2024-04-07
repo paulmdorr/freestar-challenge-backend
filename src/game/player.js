@@ -38,6 +38,22 @@ class Player {
       PointsRule.hasBlackjack(this) && !PointsRule.hasBlackjack(otherPlayer)
     );
   }
+
+  winsByPoints(otherPlayer) {
+    return (
+      PointsRule.calculatePoints(this.handWithRevealedFacedownCard) >
+      PointsRule.calculatePoints(otherPlayer.handWithRevealedFacedownCard)
+    );
+  }
+
+  winsByBlackjackOrPoints(otherPlayer) {
+    return (
+      !PointsRule.isBust(this.handWithRevealedFacedownCard) &&
+      (PointsRule.isBust(otherPlayer.handWithRevealedFacedownCard) ||
+        this.winsByBlackjack(otherPlayer) ||
+        this.winsByPoints(otherPlayer))
+    );
+  }
 }
 
 export default Player;
