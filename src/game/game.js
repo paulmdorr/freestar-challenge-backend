@@ -1,13 +1,13 @@
 import Dealer from './dealer.js';
 import Player from './player.js';
-import { WINNER_TYPE } from './pointsRule.js';
+import PointsRule, { WINNER_TYPE } from './pointsRule.js';
 
 class Game {
-  constructor(playerName, deck) {
+  constructor(playerName, deckFactory) {
     this.state = GAME_STATE.PLAYER_TURN;
     this.winner = null;
     this.player = new Player(playerName);
-    this.dealer = new Dealer(deck);
+    this.dealer = new Dealer(deckFactory.createDeck());
     this.#dealInitialCards();
   }
 
@@ -25,6 +25,11 @@ class Game {
 
   playerHit() {
     this.dealer.dealCard(this.player);
+
+    if (PointsRule.isBust(this.player.hand)) {
+      this.state = GAME_STATE.GAME_OVER;
+      this.winner = WINNER_TYPE.DEALER;
+    }
   }
 
   playerHold() {

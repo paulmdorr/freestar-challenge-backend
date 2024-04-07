@@ -2,10 +2,11 @@ import test from 'ava';
 import Game, { GAME_STATE } from '../game.js';
 import { WINNER_TYPE } from '../pointsRule.js';
 import DeckFactory from '../deckFactory.js';
-import TrickDeckFactory from '../helpers/trickDeckFactory.js';
+import TrickBustDeckFactory from '../helpers/trickBustDeckFactory.js';
+import TrickNaturalBlackjackDeckFactory from '../helpers/trickNaturalBlackjackDeckFactory.js';
 
 test('can create a game', (t) => {
-  const game = new Game('Test Player', DeckFactory.createDeck());
+  const game = new Game('Test Player', DeckFactory);
 
   t.is(game.player.name, 'Test Player');
   t.is(game.dealer.name, 'Dealer');
@@ -15,7 +16,7 @@ test('can create a game', (t) => {
 });
 
 test('player can hit', (t) => {
-  const game = new Game('Test Player', DeckFactory.createDeck());
+  const game = new Game('Test Player', DeckFactory);
 
   game.playerHit();
 
@@ -23,7 +24,7 @@ test('player can hit', (t) => {
 });
 
 test('player can hold', (t) => {
-  const game = new Game('Test Player', DeckFactory.createDeck());
+  const game = new Game('Test Player', DeckFactory);
 
   game.playerHold();
 
@@ -32,8 +33,17 @@ test('player can hold', (t) => {
 });
 
 test('game was just created and player has a blackjack', (t) => {
-  const game = new Game('Test Player', TrickDeckFactory.createDeck());
+  const game = new Game('Test Player', TrickNaturalBlackjackDeckFactory);
 
   t.is(game.state, GAME_STATE.GAME_OVER);
   t.is(game.winner, WINNER_TYPE.PLAYER);
+});
+
+test('player hits and busts', (t) => {
+  const game = new Game('Test Player', TrickBustDeckFactory);
+
+  game.playerHit();
+
+  t.is(game.state, GAME_STATE.GAME_OVER);
+  t.is(game.winner, WINNER_TYPE.DEALER);
 });

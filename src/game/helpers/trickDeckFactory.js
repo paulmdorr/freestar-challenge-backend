@@ -1,9 +1,11 @@
 import Card, { CARD_RANKS, CARD_SUITS } from '../card.js';
 import Deck from '../deck.js';
+import DeckFactory from '../deckFactory.js';
 
-class TrickDeckFactory {
+//Abstract
+class TrickDeckFactory extends DeckFactory {
   static createDeck() {
-    const cards = [];
+    let cards = [];
 
     for (let suit of Object.values(CARD_SUITS)) {
       for (let rank of Object.values(CARD_RANKS)) {
@@ -11,10 +13,8 @@ class TrickDeckFactory {
       }
     }
 
-    // Add a natural for the player
-    cards.push(new Card(CARD_RANKS.A, 'Spades'));
-    cards.push(new Card(CARD_RANKS.TWO, 'Hearts'));
-    cards.push(new Card(CARD_RANKS.K, 'Spades'));
+    //Called in the subclasses
+    cards = this._addTrickCards(cards);
 
     return new Deck(cards);
   }
