@@ -1,3 +1,5 @@
+import PointsRule from './pointsRule.js';
+
 class Player {
   #name;
   #hand;
@@ -17,6 +19,10 @@ class Player {
     return this.#hand;
   }
 
+  get handWithRevealedFacedownCard() {
+    return this.#hand;
+  }
+
   addCard(card) {
     this.#hand = Object.freeze([...this.#hand, card]);
   }
@@ -25,6 +31,12 @@ class Player {
     if (!name || !name.trim()) {
       throw new Error('Name is required!');
     }
+  }
+
+  winsByBlackjack(otherPlayer) {
+    return (
+      PointsRule.hasBlackjack(this) && !PointsRule.hasBlackjack(otherPlayer)
+    );
   }
 }
 

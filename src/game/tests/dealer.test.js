@@ -35,7 +35,7 @@ test('dealer can reveal face down card', (t) => {
 
   dealer.dealCard(dealer);
   dealer.dealCard(dealer);
-  const card = dealer.revealFaceDownCard();
+  const hand = dealer.handWithRevealedFacedownCard;
 
-  t.is(card instanceof Card, true);
+  t.is(hand[1] instanceof Card, true);
 });

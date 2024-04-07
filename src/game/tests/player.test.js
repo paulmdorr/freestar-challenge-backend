@@ -98,3 +98,16 @@ test('can add multiple cards to the hand', (t) => {
 
   t.deepEqual(player.hand, cards);
 });
+
+test('can win by blackjack', (t) => {
+  const player = new Player('Player 1');
+  const otherPlayer = new Player('Player 2');
+
+  player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
+  player.addCard(new Card(CARD_RANKS.K, CARD_SUITS.HEARTS));
+
+  otherPlayer.addCard(new Card(CARD_RANKS.K, CARD_SUITS.HEARTS));
+  otherPlayer.addCard(new Card(CARD_RANKS.K, CARD_SUITS.HEARTS));
+
+  t.true(player.winsByBlackjack(otherPlayer));
+});

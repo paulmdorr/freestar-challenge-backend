@@ -1,6 +1,6 @@
 import Dealer from './dealer.js';
 import Player from './player.js';
-import PointsRule, { WINNER_TYPE } from './pointsRule.js';
+import { WINNER_TYPE } from './pointsRule.js';
 
 class Game {
   constructor(playerName, deck) {
@@ -17,7 +17,7 @@ class Game {
     this.dealer.dealCard(this.player);
     this.dealer.dealCard(this.dealer);
 
-    if (PointsRule.isBlackjack(this.player.hand)) {
+    if (this.player.winsByBlackjack(this.dealer)) {
       this.state = GAME_STATE.GAME_OVER;
       this.winner = WINNER_TYPE.PLAYER;
     }

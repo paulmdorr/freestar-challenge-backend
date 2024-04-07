@@ -22,8 +22,8 @@ class Dealer extends Player {
     player.addCard(this.#deck.getNextCard());
   }
 
-  revealFaceDownCard() {
-    return this.hand[1].flip();
+  get handWithRevealedFacedownCard() {
+    return [this.hand[0], this.hand[1].flip(), ...this.hand.slice(2)];
   }
 }
 

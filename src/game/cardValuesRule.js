@@ -1,17 +1,17 @@
 import { CARD_RANKS } from './card.js';
 
 class CardValuesRule {
-  static getValue(card, total) {
-    if (!Object.values(CARD_RANKS).includes(card)) {
+  static getValue(rank, total) {
+    if (!Object.values(CARD_RANKS).includes(rank)) {
       throw new Error('Invalid card!');
     }
 
-    if (card === 'A') {
+    if (rank === 'A') {
       return total + 11 > 21 ? 1 : 11;
-    } else if (card === 'K' || card === 'Q' || card === 'J') {
+    } else if (rank === 'K' || rank === 'Q' || rank === 'J') {
       return 10;
     } else {
-      return parseInt(card);
+      return parseInt(rank);
     }
   }
 }

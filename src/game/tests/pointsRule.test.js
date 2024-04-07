@@ -1,6 +1,7 @@
 import test from 'ava';
 import PointsRule, { WINNER_TYPE } from '../pointsRule.js';
 import Card, { CARD_SUITS, CARD_RANKS } from '../card.js';
+import Player from '../player.js';
 
 test('calculates points for a hand', (t) => {
   const points = PointsRule.calculatePoints([
@@ -60,167 +61,175 @@ test('decides if the hand is not a bust', (t) => {
 });
 
 test('decides winner with player winning by points', (t) => {
-  const playerHand = [
-    new Card(CARD_RANKS.A, CARD_SUITS.HEARTS),
-    new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS),
-    new Card(CARD_RANKS.FIVE, CARD_SUITS.HEARTS),
-  ];
-  const dealerHand = [
-    new Card(CARD_RANKS.A, CARD_SUITS.CLUBS),
-    new Card(CARD_RANKS.TWO, CARD_SUITS.DIAMONDS),
-    new Card(CARD_RANKS.FOUR, CARD_SUITS.HEARTS),
-  ];
+  const player = new Player('Player');
+  const dealer = new Player('Dealer');
 
-  const winner = PointsRule.decideWinner(playerHand, dealerHand);
+  player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
+  player.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
+  player.addCard(new Card(CARD_RANKS.FIVE, CARD_SUITS.HEARTS));
+
+  dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.CLUBS));
+  dealer.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.DIAMONDS));
+  dealer.addCard(new Card(CARD_RANKS.FOUR, CARD_SUITS.HEARTS));
+
+  const winner = PointsRule.decideWinner(player, dealer);
 
   t.is(winner, WINNER_TYPE.PLAYER);
 });
 
 test('decides winner with a tie by points', (t) => {
-  const playerHand = [
-    new Card(CARD_RANKS.A, CARD_SUITS.HEARTS),
-    new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS),
-    new Card(CARD_RANKS.THREE, CARD_SUITS.HEARTS),
-  ];
-  const dealerHand = [
-    new Card(CARD_RANKS.A, CARD_SUITS.CLUBS),
-    new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS),
-    new Card(CARD_RANKS.THREE, CARD_SUITS.HEARTS),
-  ];
+  const player = new Player('Player');
+  const dealer = new Player('Dealer');
 
-  const winner = PointsRule.decideWinner(playerHand, dealerHand);
+  player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
+  player.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
+  player.addCard(new Card(CARD_RANKS.THREE, CARD_SUITS.HEARTS));
+
+  dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.CLUBS));
+  dealer.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
+  dealer.addCard(new Card(CARD_RANKS.THREE, CARD_SUITS.HEARTS));
+
+  const winner = PointsRule.decideWinner(player, dealer);
 
   t.is(winner, WINNER_TYPE.TIE);
 });
 
 test('decides winner with the dealer winning by points', (t) => {
-  const playerHand = [
-    new Card(CARD_RANKS.A, CARD_SUITS.HEARTS),
-    new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS),
-    new Card(CARD_RANKS.THREE, CARD_SUITS.HEARTS),
-  ];
-  const dealerHand = [
-    new Card(CARD_RANKS.A, CARD_SUITS.CLUBS),
-    new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS),
-    new Card(CARD_RANKS.FOUR, CARD_SUITS.HEARTS),
-  ];
+  const player = new Player('Player');
+  const dealer = new Player('Dealer');
 
-  const winner = PointsRule.decideWinner(playerHand, dealerHand);
+  player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
+  player.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
+  player.addCard(new Card(CARD_RANKS.THREE, CARD_SUITS.HEARTS));
+
+  dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.CLUBS));
+  dealer.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
+  dealer.addCard(new Card(CARD_RANKS.FOUR, CARD_SUITS.HEARTS));
+
+  const winner = PointsRule.decideWinner(player, dealer);
 
   t.is(winner, WINNER_TYPE.DEALER);
 });
 
 test('decides winner with the player having a bust', (t) => {
-  const playerHand = [
-    new Card(CARD_RANKS.A, CARD_SUITS.HEARTS),
-    new Card(CARD_RANKS.TEN, CARD_SUITS.HEARTS),
-    new Card(CARD_RANKS.FIVE, CARD_SUITS.HEARTS),
-  ];
-  const dealerHand = [
-    new Card(CARD_RANKS.A, CARD_SUITS.SPADES),
-    new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS),
-    new Card(CARD_RANKS.FOUR, CARD_SUITS.HEARTS),
-  ];
+  const player = new Player('Player');
+  const dealer = new Player('Dealer');
 
-  const winner = PointsRule.decideWinner(playerHand, dealerHand);
+  player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
+  player.addCard(new Card(CARD_RANKS.TEN, CARD_SUITS.HEARTS));
+  player.addCard(new Card(CARD_RANKS.FIVE, CARD_SUITS.HEARTS));
+
+  dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.SPADES));
+  dealer.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
+  dealer.addCard(new Card(CARD_RANKS.FOUR, CARD_SUITS.HEARTS));
+
+  const winner = PointsRule.decideWinner(player, dealer);
 
   t.is(winner, WINNER_TYPE.DEALER);
 });
 
 test('decides winner with the dealer having a bust', (t) => {
-  const playerHand = [
-    new Card(CARD_RANKS.A, CARD_SUITS.HEARTS),
-    new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS),
-    new Card(CARD_RANKS.FOUR, CARD_SUITS.HEARTS),
-  ];
-  const dealerHand = [
-    new Card(CARD_RANKS.A, CARD_SUITS.SPADES),
-    new Card(CARD_RANKS.TEN, CARD_SUITS.HEARTS),
-    new Card(CARD_RANKS.FIVE, CARD_SUITS.HEARTS),
-  ];
+  const player = new Player('Player');
+  const dealer = new Player('Dealer');
 
-  const winner = PointsRule.decideWinner(playerHand, dealerHand);
+  player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
+  player.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
+  player.addCard(new Card(CARD_RANKS.FOUR, CARD_SUITS.HEARTS));
+
+  dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.SPADES));
+  dealer.addCard(new Card(CARD_RANKS.TEN, CARD_SUITS.HEARTS));
+  dealer.addCard(new Card(CARD_RANKS.FIVE, CARD_SUITS.HEARTS));
+
+  const winner = PointsRule.decideWinner(player, dealer);
 
   t.is(winner, WINNER_TYPE.PLAYER);
 });
 
 test('decides winner with the player having a blackjack', (t) => {
-  const playerHand = [
-    new Card(CARD_RANKS.A, CARD_SUITS.HEARTS),
-    new Card(CARD_RANKS.K, CARD_SUITS.HEARTS),
-  ];
-  const dealerHand = [
-    new Card(CARD_RANKS.A, CARD_SUITS.DIAMONDS),
-    new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS),
-  ];
+  const player = new Player('Player');
+  const dealer = new Player('Dealer');
 
-  const winner = PointsRule.decideWinner(playerHand, dealerHand);
+  player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
+  player.addCard(new Card(CARD_RANKS.K, CARD_SUITS.HEARTS));
+
+  dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.DIAMONDS));
+  dealer.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
+
+  const winner = PointsRule.decideWinner(player, dealer);
 
   t.is(winner, WINNER_TYPE.PLAYER);
 });
 
 test('decides winner with the dealer having a blackjack', (t) => {
-  const playerHand = [
-    new Card(CARD_RANKS.A, CARD_SUITS.HEARTS),
-    new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS),
-  ];
-  const dealerHand = [
-    new Card(CARD_RANKS.A, CARD_SUITS.DIAMONDS),
-    new Card(CARD_RANKS.K, CARD_SUITS.HEARTS),
-  ];
+  const player = new Player('Player');
+  const dealer = new Player('Dealer');
 
-  const winner = PointsRule.decideWinner(playerHand, dealerHand);
+  player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
+  player.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
+
+  dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.DIAMONDS));
+  dealer.addCard(new Card(CARD_RANKS.K, CARD_SUITS.HEARTS));
+
+  const winner = PointsRule.decideWinner(player, dealer);
 
   t.is(winner, WINNER_TYPE.DEALER);
 });
 
 test('decides winner with the player having a blackjack and the dealer having a blackjack', (t) => {
-  const playerHand = [
-    new Card(CARD_RANKS.A, CARD_SUITS.HEARTS),
-    new Card(CARD_RANKS.K, CARD_SUITS.HEARTS),
-  ];
-  const dealerHand = [
-    new Card(CARD_RANKS.A, CARD_SUITS.DIAMONDS),
-    new Card(CARD_RANKS.K, CARD_SUITS.DIAMONDS),
-  ];
+  const player = new Player('Player');
+  const dealer = new Player('Dealer');
 
-  const winner = PointsRule.decideWinner(playerHand, dealerHand);
+  player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
+  player.addCard(new Card(CARD_RANKS.K, CARD_SUITS.HEARTS));
+
+  dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.DIAMONDS));
+  dealer.addCard(new Card(CARD_RANKS.K, CARD_SUITS.DIAMONDS));
+
+  const winner = PointsRule.decideWinner(player, dealer);
 
   t.is(winner, WINNER_TYPE.TIE);
 });
 
 test('decides if hand is a blackjack', (t) => {
-  const isBlackjack = PointsRule.isBlackjack([
-    new Card(CARD_RANKS.A, CARD_SUITS.HEARTS),
-    new Card(CARD_RANKS.K, CARD_SUITS.HEARTS),
-  ]);
+  const player = new Player('Player');
 
-  t.true(isBlackjack);
+  player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
+  player.addCard(new Card(CARD_RANKS.K, CARD_SUITS.HEARTS));
+
+  const hasBlackjack = PointsRule.hasBlackjack(player);
+
+  t.true(hasBlackjack);
 });
 
 test('decides if hand is not a blackjack', (t) => {
-  const isBlackjack = PointsRule.isBlackjack([
-    new Card(CARD_RANKS.A, CARD_SUITS.HEARTS),
-    new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS),
-  ]);
+  const player = new Player('Player');
 
-  t.false(isBlackjack);
+  player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
+  player.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
+
+  const hasBlackjack = PointsRule.hasBlackjack(player);
+
+  t.false(hasBlackjack);
 });
 
 test('decides if hand is a blackjack with more than two cards', (t) => {
-  const isBlackjack = PointsRule.isBlackjack([
-    new Card(CARD_RANKS.A, CARD_SUITS.HEARTS),
-    new Card(CARD_RANKS.K, CARD_SUITS.HEARTS),
-    new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS),
-  ]);
+  const player = new Player('Player');
 
-  t.false(isBlackjack);
+  player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
+  player.addCard(new Card(CARD_RANKS.K, CARD_SUITS.HEARTS));
+  player.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
+
+  const hasBlackjack = PointsRule.hasBlackjack(player);
+
+  t.false(hasBlackjack);
 });
 
 test('decides if hand is a blackjack with less than two cards', (t) => {
-  const isBlackjack = PointsRule.isBlackjack([
-    new Card(CARD_RANKS.A, CARD_SUITS.HEARTS),
-  ]);
+  const player = new Player('Player');
 
-  t.false(isBlackjack);
+  player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
+
+  const hasBlackjack = PointsRule.hasBlackjack(player);
+
+  t.false(hasBlackjack);
 });

@@ -8,10 +8,10 @@ class PointsRule {
     );
   }
 
-  static decideWinner(playerHand, dealerHand) {
-    if (this.#playerWins(playerHand, dealerHand)) {
+  static decideWinner(player, dealer) {
+    if (this.#playerWins(player, dealer)) {
       return WINNER_TYPE.PLAYER;
-    } else if (this.#dealerWins(playerHand, dealerHand)) {
+    } else if (this.#dealerWins(player, dealer)) {
       return WINNER_TYPE.DEALER;
     } else {
       return WINNER_TYPE.TIE;
@@ -22,33 +22,34 @@ class PointsRule {
     return this.calculatePoints(hand) > 21;
   }
 
-  static isBlackjack(hand) {
+  static hasBlackjack(player) {
+    const hand = player.handWithRevealedFacedownCard;
+
     return hand.length === 2 && this.calculatePoints(hand) === 21;
   }
 
-  static #playerWins(playerHand, dealerHand) {
-    return this.#playerOneWins(playerHand, dealerHand);
+  static #playerWins(player, dealer) {
+    return this.#playerOneWins(player, dealer);
   }
 
-  static #dealerWins(playerHand, dealerHand) {
-    return this.#playerOneWins(dealerHand, playerHand);
+  static #dealerWins(player, dealer) {
+    return this.#playerOneWins(dealer, player);
   }
 
   static #playerOneWins(playerOne, playerTwo) {
     return (
-      !this.isBust(playerOne) &&
-      (this.isBust(playerTwo) ||
+      !this.isBust(playerOne.hand) &&
+      (this.isBust(playerTwo.hand) ||
         this.#playerOneWinsByPoints(playerOne, playerTwo) ||
-        this.#playerOneWinsByBlackjack(playerOne, playerTwo))
+        playerOne.winsByBlackjack(playerTwo))
     );
   }
 
   static #playerOneWinsByPoints(playerOne, playerTwo) {
-    return this.calculatePoints(playerOne) > this.calculatePoints(playerTwo);
-  }
-
-  static #playerOneWinsByBlackjack(playerOne, playerTwo) {
-    return this.isBlackjack(playerOne) && !this.isBlackjack(playerTwo);
+    return (
+      this.calculatePoints(playerOne.hand) >
+      this.calculatePoints(playerTwo.hand)
+    );
   }
 }
 
