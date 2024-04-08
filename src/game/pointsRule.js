@@ -1,6 +1,16 @@
 import { CARD_RANKS } from './card.js';
 import CardValuesRule from './cardValuesRule.js';
 
+const WINNER_TYPE = Object.freeze({
+  PLAYER: 'player',
+  DEALER: 'dealer',
+  TIE: 'tie',
+});
+
+const BLACKJACK_POINTS = 21;
+const DEALER_HIT_THRESHOLD = 17;
+const BASE_HAND_SIZE = 2;
+
 class PointsRule {
   static calculatePoints(hand) {
     return this.#sortAcesLast(hand).reduce(
@@ -27,13 +37,16 @@ class PointsRule {
   }
 
   static isBust(hand) {
-    return this.calculatePoints(hand) > 21;
+    return this.calculatePoints(hand) > BLACKJACK_POINTS;
   }
 
   static hasBlackjack(player) {
     const hand = player.handWithRevealedFacedownCard;
 
-    return hand.length === 2 && this.calculatePoints(hand) === 21;
+    return (
+      hand.length === BASE_HAND_SIZE &&
+      this.calculatePoints(hand) === BLACKJACK_POINTS
+    );
   }
 
   static shouldDealerHit(dealer) {
@@ -41,15 +54,9 @@ class PointsRule {
       dealer.handWithRevealedFacedownCard,
     );
 
-    return dealerPoints < 17;
+    return dealerPoints < DEALER_HIT_THRESHOLD;
   }
 }
 
-const WINNER_TYPE = Object.freeze({
-  PLAYER: 'player',
-  DEALER: 'dealer',
-  TIE: 'tie',
-});
-
 export default PointsRule;
-export { WINNER_TYPE };
+export { WINNER_TYPE, BLACKJACK_POINTS, DEALER_HIT_THRESHOLD, BASE_HAND_SIZE };

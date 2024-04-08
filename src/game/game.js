@@ -1,6 +1,6 @@
 import Dealer from './dealer.js';
 import Player from './player.js';
-import PointsRule, { WINNER_TYPE } from './pointsRule.js';
+import PointsRule, { WINNER_TYPE, BLACKJACK_POINTS } from './pointsRule.js';
 
 class Game {
   constructor(playerName, deckFactory) {
@@ -39,7 +39,7 @@ class Game {
   shouldEndPlayerTurn() {
     return (
       PointsRule.isBust(this.player.hand) ||
-      PointsRule.calculatePoints(this.player.hand) === 21
+      PointsRule.calculatePoints(this.player.hand) === BLACKJACK_POINTS
     );
   }
 

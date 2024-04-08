@@ -1,3 +1,26 @@
+const CARD_SUITS = Object.freeze({
+  SPADES: 'spades',
+  HEARTS: 'hearts',
+  DIAMONDS: 'diamonds',
+  CLUBS: 'clubs',
+});
+
+const CARD_RANKS = Object.freeze({
+  TWO: '2',
+  THREE: '3',
+  FOUR: '4',
+  FIVE: '5',
+  SIX: '6',
+  SEVEN: '7',
+  EIGHT: '8',
+  NINE: '9',
+  TEN: '10',
+  J: 'J',
+  Q: 'Q',
+  K: 'K',
+  A: 'A',
+});
+
 class Card {
   _rank;
   _suit;
@@ -27,29 +50,6 @@ class Card {
     if (!CARD_SUITS[suit.toUpperCase()]) throw new Error('Invalid suit!');
   }
 }
-
-const CARD_SUITS = Object.freeze({
-  SPADES: 'spades',
-  HEARTS: 'hearts',
-  DIAMONDS: 'diamonds',
-  CLUBS: 'clubs',
-});
-
-const CARD_RANKS = Object.freeze({
-  TWO: '2',
-  THREE: '3',
-  FOUR: '4',
-  FIVE: '5',
-  SIX: '6',
-  SEVEN: '7',
-  EIGHT: '8',
-  NINE: '9',
-  TEN: '10',
-  J: 'J',
-  Q: 'Q',
-  K: 'K',
-  A: 'A',
-});
 
 export default Card;
 export { CARD_SUITS, CARD_RANKS };
