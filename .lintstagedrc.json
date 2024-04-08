@@ -1,3 +1,4 @@
 {
-  "*.js": "eslint"
+  "*.js": "eslint",
+  "*.test.js": "ava --verbose --serial --fail-fast --timeout=10s --concurrency=1"
 }
