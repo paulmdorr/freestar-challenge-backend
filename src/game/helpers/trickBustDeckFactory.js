@@ -5,8 +5,10 @@ class TrickBustDeckFactory extends TrickDeckFactory {
   static _addTrickCards(cards) {
     return cards.concat([
       new Card(CARD_RANKS.Q, CARD_SUITS.SPADES),
-      new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS),
+      new Card(CARD_RANKS.J, CARD_SUITS.HEARTS),
+      new Card(CARD_RANKS.K, CARD_SUITS.DIAMONDS),
       new Card(CARD_RANKS.K, CARD_SUITS.SPADES),
+      new Card(CARD_RANKS.K, CARD_SUITS.HEARTS),
     ]);
   }
 }

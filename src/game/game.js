@@ -26,14 +26,44 @@ class Game {
   playerHit() {
     this.dealer.dealCard(this.player);
 
-    if (PointsRule.isBust(this.player.hand)) {
-      this.state = GAME_STATE.GAME_OVER;
-      this.winner = WINNER_TYPE.DEALER;
+    if (this.shouldEndPlayerTurn()) {
+      this.playerHold();
     }
   }
 
   playerHold() {
     this.state = GAME_STATE.DEALER_TURN;
+    this.dealerTurn();
+  }
+
+  shouldEndPlayerTurn() {
+    return (
+      PointsRule.isBust(this.player.hand) ||
+      PointsRule.calculatePoints(this.player.hand) === 21
+    );
+  }
+
+  dealerTurn() {
+    while (PointsRule.shouldDealerHit(this.dealer)) {
+      this.dealer.dealCard(this.dealer);
+    }
+
+    if (
+      PointsRule.isBust(this.player.hand) ||
+      this.dealer.winsByPoints(this.player)
+    ) {
+      this.state = GAME_STATE.GAME_OVER;
+      this.winner = WINNER_TYPE.DEALER;
+    } else if (
+      PointsRule.isBust(this.dealer.handWithRevealedFacedownCard) ||
+      this.player.winsByPoints(this.dealer)
+    ) {
+      this.state = GAME_STATE.GAME_OVER;
+      this.winner = WINNER_TYPE.PLAYER;
+    } else {
+      this.state = GAME_STATE.GAME_OVER;
+      this.winner = WINNER_TYPE.TIE;
+    }
   }
 }
 

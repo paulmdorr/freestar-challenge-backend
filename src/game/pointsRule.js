@@ -43,10 +43,6 @@ class PointsRule {
 
     return dealerPoints < 17;
   }
-
-  static #hasAce(hand) {
-    return hand.some((card) => card.rank === CARD_RANKS.A);
-  }
 }
 
 const WINNER_TYPE = Object.freeze({
