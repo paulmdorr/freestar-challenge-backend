@@ -1,11 +1,19 @@
+import { CARD_RANKS } from './card.js';
 import CardValuesRule from './cardValuesRule.js';
 
 class PointsRule {
   static calculatePoints(hand) {
-    return hand.reduce(
+    return this.#sortAcesLast(hand).reduce(
       (sum, card) => sum + CardValuesRule.getValue(card.rank, sum),
       0,
     );
+  }
+
+  static #sortAcesLast(hand) {
+    const aces = hand.filter((card) => card.rank === CARD_RANKS.A);
+    const nonAces = hand.filter((card) => card.rank !== CARD_RANKS.A);
+
+    return [...nonAces, ...aces];
   }
 
   static decideWinner(player, dealer) {
@@ -26,6 +34,18 @@ class PointsRule {
     const hand = player.handWithRevealedFacedownCard;
 
     return hand.length === 2 && this.calculatePoints(hand) === 21;
+  }
+
+  static shouldDealerHit(dealer) {
+    const dealerPoints = this.calculatePoints(
+      dealer.handWithRevealedFacedownCard,
+    );
+
+    return dealerPoints < 17;
+  }
+
+  static #hasAce(hand) {
+    return hand.some((card) => card.rank === CARD_RANKS.A);
   }
 }
 

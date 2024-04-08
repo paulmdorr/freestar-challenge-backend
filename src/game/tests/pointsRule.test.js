@@ -45,6 +45,7 @@ test('decides if the hand is a bust', (t) => {
     new Card(CARD_RANKS.A, CARD_SUITS.HEARTS),
     new Card(CARD_RANKS.TEN, CARD_SUITS.HEARTS),
     new Card(CARD_RANKS.FIVE, CARD_SUITS.HEARTS),
+    new Card(CARD_RANKS.SEVEN, CARD_SUITS.HEARTS),
   ]);
 
   t.true(isBust);
@@ -232,4 +233,72 @@ test('decides if hand is a blackjack with less than two cards', (t) => {
   const hasBlackjack = PointsRule.hasBlackjack(player);
 
   t.false(hasBlackjack);
+});
+
+test('decides if dealer should hit', (t) => {
+  const dealer = new Player('Dealer');
+
+  dealer.addCard(new Card(CARD_RANKS.TEN, CARD_SUITS.HEARTS));
+  dealer.addCard(new Card(CARD_RANKS.SIX, CARD_SUITS.HEARTS));
+
+  const shouldHit = PointsRule.shouldDealerHit(dealer);
+
+  t.true(shouldHit);
+});
+
+test('decides if dealer should not hit with a soft 17', (t) => {
+  const dealer = new Player('Dealer');
+
+  dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
+  dealer.addCard(new Card(CARD_RANKS.SIX, CARD_SUITS.HEARTS));
+
+  const shouldHit = PointsRule.shouldDealerHit(dealer);
+
+  t.false(shouldHit);
+});
+
+test('decides if dealer should not hit', (t) => {
+  const dealer = new Player('Dealer');
+
+  dealer.addCard(new Card(CARD_RANKS.TEN, CARD_SUITS.HEARTS));
+  dealer.addCard(new Card(CARD_RANKS.SEVEN, CARD_SUITS.HEARTS));
+
+  const shouldHit = PointsRule.shouldDealerHit(dealer);
+
+  t.false(shouldHit);
+});
+
+test('decides if dealer should hit with two aces', (t) => {
+  const dealer = new Player('Dealer');
+
+  dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
+  dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.SPADES));
+
+  const shouldHit = PointsRule.shouldDealerHit(dealer);
+
+  t.true(shouldHit);
+});
+
+test('decides if dealer should not hit with two aces', (t) => {
+  const dealer = new Player('Dealer');
+
+  dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
+  dealer.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
+  dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.SPADES));
+
+  const shouldHit = PointsRule.shouldDealerHit(dealer);
+
+  t.true(shouldHit);
+});
+
+test('decides if dealer should not hit with a soft 17 and two aces', (t) => {
+  const dealer = new Player('Dealer');
+
+  dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
+  dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.SPADES));
+  dealer.addCard(new Card(CARD_RANKS.FIVE, CARD_SUITS.HEARTS));
+
+  const shouldHit = PointsRule.shouldDealerHit(dealer);
+
+  t.false(shouldHit);
 });
