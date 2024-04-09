@@ -2,8 +2,10 @@ import Card, { CARD_RANKS, CARD_SUITS } from './card.js';
 import Deck from './deck.js';
 
 class DeckFactory {
-  static createDeck() {
-    const cards = [];
+  static createDeck(cards = []) {
+    if (cards.length) {
+      return new Deck(cards);
+    }
 
     Object.values(CARD_SUITS).forEach((suit) => {
       Object.values(CARD_RANKS).forEach((value) => {
