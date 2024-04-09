@@ -2,8 +2,8 @@ import FaceDownCard from './faceDownCard.js';
 import Player from './player.js';
 
 class Dealer extends Player {
-  constructor() {
-    super('Dealer');
+  constructor(hand = []) {
+    super('Dealer', hand);
   }
 
   addCard(card) {

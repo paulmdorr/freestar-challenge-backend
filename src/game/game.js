@@ -33,6 +33,8 @@ class Game {
   }
 
   playerHit() {
+    this.#checkIfGameIsOver(this.state);
+    this.#checkIfDealerTurn(this.state);
     this.dealer.dealCard(this.player, this.#deck);
 
     if (this.shouldEndPlayerTurn()) {
@@ -41,6 +43,8 @@ class Game {
   }
 
   playerHold() {
+    this.#checkIfGameIsOver(this.state);
+    this.#checkIfDealerTurn(this.state);
     this.state = GAME_STATE.DEALER_TURN;
     this.dealerTurn();
   }
@@ -77,6 +81,18 @@ class Game {
 
   get deck() {
     return this.#deck;
+  }
+
+  #checkIfGameIsOver(state) {
+    if (state === GAME_STATE.GAME_OVER) {
+      throw new Error('Game is over');
+    }
+  }
+
+  #checkIfDealerTurn(state) {
+    if (state === GAME_STATE.DEALER_TURN) {
+      throw new Error("It is the dealer's turn");
+    }
   }
 }
 

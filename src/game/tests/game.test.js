@@ -8,6 +8,9 @@ import TrickDealerWinsDeckFactory from './helpers/trickDealerWinsDeckFactory.js'
 import TrickNotBustDeckFactory from './helpers/trickNotBustDeckFactory.js';
 import TrickPlayerWinsDeckFactory from './helpers/trickPlayerWinsDeckFactory.js';
 import TrickTieDeckFactory from './helpers/trickTieDeckFactory.js';
+import GameBuilder from '../gameBuilder.js';
+import Card, { CARD_RANKS, CARD_SUITS } from '../card.js';
+import FaceDownCard from '../faceDownCard.js';
 
 test('can create a game', (t) => {
   const game = new Game();
@@ -115,4 +118,66 @@ test('can set deck factory and no cards list', (t) => {
   game.initialiseDeck(DeckFactory);
 
   t.is(game.deck.cards.length, 52);
+});
+
+test("player can't hit if game is over", (t) => {
+  const gameBuilder = new GameBuilder();
+  const game = gameBuilder
+    .setPlayer('Player 1')
+    .setDealer()
+    .setState(GAME_STATE.GAME_OVER)
+    .setDeck(DeckFactory)
+    .build();
+
+  const error = t.throws(() => game.playerHit());
+
+  t.is(error.message, 'Game is over');
+});
+
+test("player can't hold if game is over", (t) => {
+  const gameBuilder = new GameBuilder();
+  const game = gameBuilder
+    .setPlayer('Player 1')
+    .setDealer()
+    .setState(GAME_STATE.GAME_OVER)
+    .setDeck(DeckFactory)
+    .build();
+
+  const error = t.throws(() => game.playerHold());
+
+  t.is(error.message, 'Game is over');
+});
+
+test("player can't hit if it's dealer turn", (t) => {
+  const gameBuilder = new GameBuilder();
+  const game = gameBuilder
+    .setPlayer('Player 1')
+    .setDealer([
+      new Card(CARD_RANKS.A, CARD_SUITS.HEARTS),
+      new FaceDownCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS)),
+    ])
+    .setState(GAME_STATE.DEALER_TURN)
+    .setDeck(DeckFactory)
+    .build();
+
+  const error = t.throws(() => game.playerHit());
+
+  t.is(error.message, "It is the dealer's turn");
+});
+
+test("player can't hold if it's player turn", (t) => {
+  const gameBuilder = new GameBuilder();
+  const game = gameBuilder
+    .setPlayer('Player 1')
+    .setDealer([
+      new Card(CARD_RANKS.A, CARD_SUITS.HEARTS),
+      new FaceDownCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS)),
+    ])
+    .setState(GAME_STATE.DEALER_TURN)
+    .setDeck(DeckFactory)
+    .build();
+
+  const error = t.throws(() => game.playerHold());
+
+  t.is(error.message, "It is the dealer's turn");
 });

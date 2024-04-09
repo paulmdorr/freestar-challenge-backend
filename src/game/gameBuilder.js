@@ -1,3 +1,4 @@
+import Dealer from './dealer.js';
 import Game from './game.js';
 import Player from './player.js';
 
@@ -13,7 +14,7 @@ class GameBuilder {
   }
 
   setDealer(hand = []) {
-    this.game.dealer = new Player('Dealer', hand);
+    this.game.dealer = new Dealer(hand);
 
     return this;
   }
