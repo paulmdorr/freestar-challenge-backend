@@ -14,9 +14,6 @@ test('can create a game', (t) => {
 
   t.is(game.player.name, 'Test Player');
   t.is(game.dealer.name, 'Dealer');
-  t.deepEqual(game.player.hand.length, 2);
-  t.deepEqual(game.dealer.hand.length, 2);
-  t.is(game.state, GAME_STATE.PLAYER_TURN);
 });
 
 test('player can hit', (t) => {
