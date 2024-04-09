@@ -4,11 +4,11 @@ class Player {
   #name;
   #hand;
 
-  constructor(name) {
+  constructor(name, hand = []) {
     this.#checkName(name);
 
     this.#name = name;
-    this.#hand = Object.freeze([]);
+    this.#hand = Object.freeze(hand);
   }
 
   get name() {

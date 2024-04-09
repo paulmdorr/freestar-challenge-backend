@@ -3,7 +3,7 @@ import Deck from './deck.js';
 
 class DeckFactory {
   static createDeck(cards = []) {
-    if (cards.length) {
+    if (cards?.length) {
       return new Deck(cards);
     }
 

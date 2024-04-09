@@ -2,12 +2,8 @@ import FaceDownCard from './faceDownCard.js';
 import Player from './player.js';
 
 class Dealer extends Player {
-  #deck;
-
-  constructor(deck) {
+  constructor() {
     super('Dealer');
-
-    this.#deck = deck;
   }
 
   addCard(card) {
@@ -18,8 +14,8 @@ class Dealer extends Player {
     }
   }
 
-  dealCard(player) {
-    player.addCard(this.#deck.getNextCard());
+  dealCard(player, deck) {
+    player.addCard(deck.getNextCard());
   }
 
   get handWithRevealedFacedownCard() {

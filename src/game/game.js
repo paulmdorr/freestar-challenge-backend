@@ -3,19 +3,24 @@ import Player from './player.js';
 import PointsRule, { WINNER_TYPE, BLACKJACK_POINTS } from './pointsRule.js';
 
 class Game {
-  constructor(playerName, deckFactory) {
+  #deck;
+
+  constructor() {}
+
+  initialiseGame(playerName, deckFactory) {
     this.state = GAME_STATE.PLAYER_TURN;
     this.winner = null;
     this.player = new Player(playerName);
-    this.dealer = new Dealer(deckFactory.createDeck());
+    this.dealer = new Dealer();
+    this.initialiseDeck(deckFactory);
     this.#dealInitialCards();
   }
 
   #dealInitialCards() {
-    this.dealer.dealCard(this.player);
-    this.dealer.dealCard(this.dealer);
-    this.dealer.dealCard(this.player);
-    this.dealer.dealCard(this.dealer);
+    this.dealer.dealCard(this.player, this.#deck);
+    this.dealer.dealCard(this.dealer, this.#deck);
+    this.dealer.dealCard(this.player, this.#deck);
+    this.dealer.dealCard(this.dealer, this.#deck);
 
     if (this.player.winsByBlackjack(this.dealer)) {
       this.state = GAME_STATE.GAME_OVER;
@@ -23,8 +28,12 @@ class Game {
     }
   }
 
+  initialiseDeck(deckFactory, deckCards) {
+    this.#deck = deckFactory.createDeck(deckCards);
+  }
+
   playerHit() {
-    this.dealer.dealCard(this.player);
+    this.dealer.dealCard(this.player, this.#deck);
 
     if (this.shouldEndPlayerTurn()) {
       this.playerHold();
@@ -45,7 +54,7 @@ class Game {
 
   dealerTurn() {
     while (PointsRule.shouldDealerHit(this.dealer)) {
-      this.dealer.dealCard(this.dealer);
+      this.dealer.dealCard(this.dealer, this.#deck);
     }
 
     if (
@@ -64,6 +73,10 @@ class Game {
       this.state = GAME_STATE.GAME_OVER;
       this.winner = WINNER_TYPE.TIE;
     }
+  }
+
+  get deck() {
+    return this.#deck;
   }
 }
 

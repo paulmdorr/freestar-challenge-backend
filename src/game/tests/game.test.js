@@ -10,14 +10,16 @@ import TrickPlayerWinsDeckFactory from './helpers/trickPlayerWinsDeckFactory.js'
 import TrickTieDeckFactory from './helpers/trickTieDeckFactory.js';
 
 test('can create a game', (t) => {
-  const game = new Game('Test Player', DeckFactory);
+  const game = new Game();
+  game.initialiseGame('Test Player', DeckFactory);
 
   t.is(game.player.name, 'Test Player');
   t.is(game.dealer.name, 'Dealer');
 });
 
 test('player can hit', (t) => {
-  const game = new Game('Test Player', DeckFactory);
+  const game = new Game();
+  game.initialiseGame('Test Player', DeckFactory);
 
   game.playerHit();
 
@@ -25,7 +27,8 @@ test('player can hit', (t) => {
 });
 
 test('player can hold', (t) => {
-  const game = new Game('Test Player', DeckFactory);
+  const game = new Game();
+  game.initialiseGame('Test Player', DeckFactory);
 
   game.playerHold();
 
@@ -34,14 +37,16 @@ test('player can hold', (t) => {
 });
 
 test('game was just created and player has a blackjack', (t) => {
-  const game = new Game('Test Player', TrickNaturalBlackjackDeckFactory);
+  const game = new Game();
+  game.initialiseGame('Test Player', TrickNaturalBlackjackDeckFactory);
 
   t.is(game.state, GAME_STATE.GAME_OVER);
   t.is(game.winner, WINNER_TYPE.PLAYER);
 });
 
 test('player hits and busts', (t) => {
-  const game = new Game('Test Player', TrickBustDeckFactory);
+  const game = new Game();
+  game.initialiseGame('Test Player', TrickBustDeckFactory);
 
   game.playerHit();
 
@@ -50,7 +55,8 @@ test('player hits and busts', (t) => {
 });
 
 test("player hits and it's not a bust", (t) => {
-  const game = new Game('Test Player', TrickNotBustDeckFactory);
+  const game = new Game();
+  game.initialiseGame('Test Player', TrickNotBustDeckFactory);
 
   game.playerHit();
 
@@ -58,7 +64,8 @@ test("player hits and it's not a bust", (t) => {
 });
 
 test('player holds and dealer wins', (t) => {
-  const game = new Game('Test Player', TrickDealerWinsDeckFactory);
+  const game = new Game();
+  game.initialiseGame('Test Player', TrickDealerWinsDeckFactory);
 
   game.playerHold();
 
@@ -67,7 +74,8 @@ test('player holds and dealer wins', (t) => {
 });
 
 test('player hits and wins', (t) => {
-  const game = new Game('Test Player', TrickPlayerWinsDeckFactory);
+  const game = new Game();
+  game.initialiseGame('Test Player', TrickPlayerWinsDeckFactory);
 
   game.playerHit();
 
@@ -76,10 +84,35 @@ test('player hits and wins', (t) => {
 });
 
 test("player holds and it's a tie", (t) => {
-  const game = new Game('Test Player', TrickTieDeckFactory);
+  const game = new Game();
+  game.initialiseGame('Test Player', TrickTieDeckFactory);
 
   game.playerHold();
 
   t.is(game.state, GAME_STATE.GAME_OVER);
   t.is(game.winner, WINNER_TYPE.TIE);
+});
+
+test('can set deck factory and cards list', (t) => {
+  const game = new Game();
+  const deckCards = [
+    { rank: 'A', suit: 'HEARTS' },
+    { rank: '2', suit: 'HEARTS' },
+  ];
+
+  game.initialiseDeck(DeckFactory, deckCards);
+
+  t.is(game.deck.cards.length, 2);
+  t.is(game.deck.cards[0].rank, 'A');
+  t.is(game.deck.cards[0].suit, 'HEARTS');
+  t.is(game.deck.cards[1].rank, '2');
+  t.is(game.deck.cards[1].suit, 'HEARTS');
+});
+
+test('can set deck factory and no cards list', (t) => {
+  const game = new Game();
+
+  game.initialiseDeck(DeckFactory);
+
+  t.is(game.deck.cards.length, 52);
 });
