@@ -34,5 +34,10 @@
     "pino-pretty": "^11.0.0",
     "prettier": "^3.2.5",
     "supertest": "^6.3.4"
+  },
+  "ava": {
+    "files": [
+      "src/**/*.test.js"
+    ]
   }
 }

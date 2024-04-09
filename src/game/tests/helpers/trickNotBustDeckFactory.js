@@ -1,4 +1,4 @@
-import Card, { CARD_RANKS, CARD_SUITS } from '../card.js';
+import Card, { CARD_RANKS, CARD_SUITS } from '../../card.js';
 import TrickDeckFactory from './trickDeckFactory.js';
 
 class TrickNotBustDeckFactory extends TrickDeckFactory {

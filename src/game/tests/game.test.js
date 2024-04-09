@@ -2,12 +2,12 @@ import test from 'ava';
 import Game, { GAME_STATE } from '../game.js';
 import { WINNER_TYPE } from '../pointsRule.js';
 import DeckFactory from '../deckFactory.js';
-import TrickBustDeckFactory from '../helpers/trickBustDeckFactory.js';
-import TrickNaturalBlackjackDeckFactory from '../helpers/trickNaturalBlackjackDeckFactory.js';
-import TrickDealerWinsDeckFactory from '../helpers/trickDealerWinsDeckFactory.js';
-import TrickNotBustDeckFactory from '../helpers/trickNotBustDeckFactory.js';
-import TrickPlayerWinsDeckFactory from '../helpers/trickPlayerWinsDeckFactory.js';
-import TrickTieDeckFactory from '../helpers/trickTieDeckFactory.js';
+import TrickBustDeckFactory from './helpers/trickBustDeckFactory.js';
+import TrickNaturalBlackjackDeckFactory from './helpers/trickNaturalBlackjackDeckFactory.js';
+import TrickDealerWinsDeckFactory from './helpers/trickDealerWinsDeckFactory.js';
+import TrickNotBustDeckFactory from './helpers/trickNotBustDeckFactory.js';
+import TrickPlayerWinsDeckFactory from './helpers/trickPlayerWinsDeckFactory.js';
+import TrickTieDeckFactory from './helpers/trickTieDeckFactory.js';
 
 test('can create a game', (t) => {
   const game = new Game('Test Player', DeckFactory);

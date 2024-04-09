@@ -1,6 +1,6 @@
-import Card, { CARD_RANKS, CARD_SUITS } from '../card.js';
-import Deck from '../deck.js';
-import DeckFactory from '../deckFactory.js';
+import Card, { CARD_RANKS, CARD_SUITS } from '../../card.js';
+import Deck from '../../deck.js';
+import DeckFactory from '../../deckFactory.js';
 
 //Abstract
 class TrickDeckFactory extends DeckFactory {
