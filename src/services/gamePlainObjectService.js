@@ -1,6 +1,7 @@
 import Card from '../game/card.js';
 import DeckFactory from '../game/deckFactory.js';
 import GameBuilder from '../game/gameBuilder.js';
+import FaceDownCard from '../game/faceDownCard.js';
 
 function gameToPlainObject(game) {
   return {
@@ -10,7 +11,7 @@ function gameToPlainObject(game) {
     },
     dealer: {
       name: game.dealer.name,
-      hand: game.dealer.handWithRevealedFacedownCard.map(cardToPlainObject),
+      hand: game.dealer.hand.map(cardToPlainObject),
     },
     deck: game.deck.cards.map(cardToPlainObject),
     state: game.state,
@@ -18,6 +19,14 @@ function gameToPlainObject(game) {
 }
 
 function cardToPlainObject(card) {
+  if (card instanceof FaceDownCard) {
+    return {
+      rank: card.flip().rank,
+      suit: card.flip().suit,
+      facedown: true,
+    };
+  }
+
   return {
     rank: card.rank,
     suit: card.suit,
@@ -26,6 +35,7 @@ function cardToPlainObject(card) {
 
 function plainObjectToGame(plainObject) {
   const gameBuilder = new GameBuilder();
+
   return gameBuilder
     .setPlayer(
       plainObject.player.name,
@@ -38,7 +48,12 @@ function plainObjectToGame(plainObject) {
 }
 
 function plainObjectToCard(plainObject) {
-  return new Card(plainObject.rank, plainObject.suit);
+  const card = new Card(plainObject.rank, plainObject.suit);
+
+  if (plainObject.facedown) {
+    return new FaceDownCard(card);
+  }
+  return card;
 }
 
 export { gameToPlainObject, plainObjectToGame };

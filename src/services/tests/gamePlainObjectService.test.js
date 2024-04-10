@@ -18,9 +18,9 @@ test.before((t) => {
     { rank: CARD_RANKS.K, suit: CARD_SUITS.SPADES },
     new FaceDownCard({ rank: CARD_RANKS.FIVE, suit: CARD_SUITS.DIAMONDS }),
   ];
-  t.context.dealerHandWithRevealedFacedownCard = [
+  t.context.dealerHandWithFacedownCard = [
     { rank: CARD_RANKS.K, suit: CARD_SUITS.SPADES },
-    { rank: CARD_RANKS.FIVE, suit: CARD_SUITS.DIAMONDS },
+    { rank: CARD_RANKS.FIVE, suit: CARD_SUITS.DIAMONDS, facedown: true },
   ];
   t.context.deckCards = [
     { rank: CARD_RANKS.A, suit: CARD_SUITS.HEARTS },
@@ -44,7 +44,7 @@ test('can convert a game to plain object', (t) => {
     },
     dealer: {
       name: 'Dealer',
-      hand: t.context.dealerHandWithRevealedFacedownCard,
+      hand: t.context.dealerHandWithFacedownCard,
     },
     deck: t.context.deckCards,
     state: GAME_STATE.PLAYER_TURN,
