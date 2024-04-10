@@ -7,6 +7,7 @@ import GameBuilder from '../../game/gameBuilder.js';
 import { CARD_RANKS, CARD_SUITS } from '../../game/card.js';
 import { GAME_STATE } from '../../game/game.js';
 import DeckFactory from '../../game/deckFactory.js';
+import FaceDownCard from '../../game/faceDownCard.js';
 
 test.before((t) => {
   t.context.playerHand = [
@@ -14,6 +15,10 @@ test.before((t) => {
     { rank: CARD_RANKS.TWO, suit: CARD_SUITS.HEARTS },
   ];
   t.context.dealerHand = [
+    { rank: CARD_RANKS.K, suit: CARD_SUITS.SPADES },
+    new FaceDownCard({ rank: CARD_RANKS.FIVE, suit: CARD_SUITS.DIAMONDS }),
+  ];
+  t.context.dealerHandWithRevealedFacedownCard = [
     { rank: CARD_RANKS.K, suit: CARD_SUITS.SPADES },
     { rank: CARD_RANKS.FIVE, suit: CARD_SUITS.DIAMONDS },
   ];
@@ -39,7 +44,7 @@ test('can convert a game to plain object', (t) => {
     },
     dealer: {
       name: 'Dealer',
-      hand: t.context.dealerHand,
+      hand: t.context.dealerHandWithRevealedFacedownCard,
     },
     deck: t.context.deckCards,
     state: GAME_STATE.PLAYER_TURN,

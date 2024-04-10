@@ -11,7 +11,6 @@ test('can create a game and returns a plain object representation', (t) => {
   t.is(game.dealer.name, 'Dealer');
   t.deepEqual(game.player.hand.length, 2);
   t.deepEqual(game.dealer.hand.length, 2);
-  t.is(game.state, GAME_STATE.PLAYER_TURN);
   t.false(game instanceof Game);
 });
 

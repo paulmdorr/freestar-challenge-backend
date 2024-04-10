@@ -31,7 +31,7 @@ test('player can hit', (t) => {
 
 test('player can hold', (t) => {
   const game = new Game();
-  game.initialiseGame('Test Player', DeckFactory);
+  game.initialiseGame('Test Player', TrickBustDeckFactory);
 
   game.playerHold();
 

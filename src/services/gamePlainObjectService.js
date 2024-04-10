@@ -10,7 +10,7 @@ function gameToPlainObject(game) {
     },
     dealer: {
       name: game.dealer.name,
-      hand: game.dealer.hand.map(cardToPlainObject),
+      hand: game.dealer.handWithRevealedFacedownCard.map(cardToPlainObject),
     },
     deck: game.deck.cards.map(cardToPlainObject),
     state: game.state,
