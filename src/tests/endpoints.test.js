@@ -31,10 +31,11 @@ test('GET /game/hit', async (t) => {
 
   //The game could end on the first hit, so we need to loop until the game is not over
   while (body.game.state === GAME_STATE.GAME_OVER) {
-    [header, body] = await request(t.context.server)
+    const gameRes = await request(t.context.server)
       .post('/game/start')
-      .send({ playerName: 'Player 1' })
-      .set('Cookie', [...header['set-cookie']]);
+      .send({ playerName: 'Player 1' });
+    header = gameRes.header;
+    body = gameRes.body;
   }
 
   const res = await request(t.context.server)
@@ -53,10 +54,11 @@ test('GET /game/hold', async (t) => {
 
   //The game could end on the first hit, so we need to loop until the game is not over
   while (body.game.state === GAME_STATE.GAME_OVER) {
-    [header, body] = await request(t.context.server)
+    const gameRes = await request(t.context.server)
       .post('/game/start')
-      .send({ playerName: 'Player 1' })
-      .set('Cookie', [...header['set-cookie']]);
+      .send({ playerName: 'Player 1' });
+    header = gameRes.header;
+    body = gameRes.body;
   }
 
   const res = await request(t.context.server)
