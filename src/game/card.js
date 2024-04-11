@@ -15,10 +15,10 @@ const CARD_RANKS = Object.freeze({
   EIGHT: '8',
   NINE: '9',
   TEN: '10',
-  J: 'J',
-  Q: 'Q',
-  K: 'K',
-  A: 'A',
+  J: 'jack',
+  Q: 'queen',
+  K: 'king',
+  A: 'ace',
 });
 
 class Card {

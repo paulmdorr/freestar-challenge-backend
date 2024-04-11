@@ -11,11 +11,11 @@ class CardValuesRule {
       throw new Error('Invalid card!');
     }
 
-    if (rank === 'A') {
+    if (rank === CARD_RANKS.A) {
       return total + ACE_MAX_VALUE > BLACKJACK_POINTS
         ? ACE_MIN_VALUE
         : ACE_MAX_VALUE;
-    } else if (rank === 'K' || rank === 'Q' || rank === 'J') {
+    } else if ([CARD_RANKS.K, CARD_RANKS.Q, CARD_RANKS.J].includes(rank)) {
       return FACE_CARD_VALUE;
     } else {
       return parseInt(rank);
