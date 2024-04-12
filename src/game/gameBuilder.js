@@ -10,11 +10,19 @@ class GameBuilder {
   setPlayer(playerName, hand = []) {
     this.game.player = new Player(playerName, hand);
 
+    if (hand.length > 0) {
+      this.game.player.updatePoints();
+    }
+
     return this;
   }
 
   setDealer(hand = []) {
     this.game.dealer = new Dealer(hand);
+
+    if (hand.length > 0) {
+      this.game.dealer.updatePoints();
+    }
 
     return this;
   }

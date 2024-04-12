@@ -109,5 +109,8 @@ test('can win by blackjack', (t) => {
   otherPlayer.addCard(new Card(CARD_RANKS.K, CARD_SUITS.HEARTS));
   otherPlayer.addCard(new Card(CARD_RANKS.K, CARD_SUITS.HEARTS));
 
+  player.updatePoints();
+  otherPlayer.updatePoints();
+
   t.true(player.winsByBlackjack(otherPlayer));
 });

@@ -181,3 +181,13 @@ test("player can't hold if it's player turn", (t) => {
 
   t.is(error.message, "It is the dealer's turn");
 });
+
+test('game should store player and dealer points', (t) => {
+  const game = new Game();
+  game.initialiseGame('Test Player', TrickBustDeckFactory);
+
+  game.playerHit();
+
+  t.is(game.player.points, 30);
+  t.is(game.dealer.points, 20);
+});

@@ -8,10 +8,12 @@ function gameToPlainObject(game) {
     player: {
       name: game.player.name,
       hand: game.player.hand.map(cardToPlainObject),
+      points: game.player.points,
     },
     dealer: {
       name: game.dealer.name,
       hand: game.dealer.hand.map(cardToPlainObject),
+      points: game.dealer.points,
     },
     deck: game.deck.cards.map(cardToPlainObject),
     state: game.state,

@@ -16,9 +16,14 @@ class Dealer extends Player {
 
   dealCard(player, deck) {
     player.addCard(deck.getNextCard());
+    player.updatePoints();
   }
 
   get handWithRevealedFacedownCard() {
+    if (this.hand.length < 2) {
+      return this.hand;
+    }
+
     return [this.hand[0], this.hand[1].flip(), ...this.hand.slice(2)];
   }
 }

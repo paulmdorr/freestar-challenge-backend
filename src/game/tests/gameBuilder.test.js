@@ -3,19 +3,21 @@ import GameBuilder from '../gameBuilder.js';
 import { CARD_RANKS, CARD_SUITS } from '../card.js';
 import DeckFactory from '../deckFactory.js';
 import { WINNER_TYPE } from '../pointsRule.js';
+import Card from '../card.js';
+import FaceDownCard from '../faceDownCard.js';
 
 test.before((t) => {
   t.context.playerHand = [
-    { rank: CARD_RANKS.A, suit: CARD_SUITS.SPADES },
-    { rank: CARD_RANKS.TWO, suit: CARD_SUITS.SPADES },
+    new Card(CARD_RANKS.A, CARD_SUITS.SPADES),
+    new Card(CARD_RANKS.TWO, CARD_SUITS.SPADES),
   ];
   t.context.dealerHand = [
-    { rank: CARD_RANKS.A, suit: CARD_SUITS.SPADES },
-    { rank: CARD_RANKS.TWO, suit: CARD_SUITS.SPADES },
+    new Card(CARD_RANKS.A, CARD_SUITS.SPADES),
+    new FaceDownCard(new Card(CARD_RANKS.TWO, CARD_SUITS.SPADES)),
   ];
   t.context.deckCards = [
-    { rank: CARD_RANKS.A, suit: CARD_SUITS.HEARTS },
-    { rank: CARD_RANKS.TWO, suit: CARD_SUITS.HEARTS },
+    new Card(CARD_RANKS.A, CARD_SUITS.HEARTS),
+    new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS),
   ];
 });
 

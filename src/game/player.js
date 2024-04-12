@@ -3,12 +3,14 @@ import PointsRule from './pointsRule.js';
 class Player {
   #name;
   #hand;
+  #points;
 
   constructor(name, hand = []) {
     this.#checkName(name);
 
     this.#name = name;
     this.#hand = Object.freeze(hand);
+    this.#points = 0;
   }
 
   get name() {
@@ -21,6 +23,10 @@ class Player {
 
   get handWithRevealedFacedownCard() {
     return this.#hand;
+  }
+
+  get points() {
+    return this.#points;
   }
 
   addCard(card) {
@@ -40,10 +46,7 @@ class Player {
   }
 
   winsByPoints(otherPlayer) {
-    return (
-      PointsRule.calculatePoints(this.handWithRevealedFacedownCard) >
-      PointsRule.calculatePoints(otherPlayer.handWithRevealedFacedownCard)
-    );
+    return this.points > otherPlayer.points;
   }
 
   winsByBlackjackOrPoints(otherPlayer) {
@@ -52,6 +55,12 @@ class Player {
       (PointsRule.isBust(otherPlayer.handWithRevealedFacedownCard) ||
         this.winsByBlackjack(otherPlayer) ||
         this.winsByPoints(otherPlayer))
+    );
+  }
+
+  updatePoints() {
+    this.#points = PointsRule.calculatePoints(
+      this.handWithRevealedFacedownCard,
     );
   }
 }

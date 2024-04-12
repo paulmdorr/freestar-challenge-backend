@@ -2,6 +2,7 @@ import test from 'ava';
 import PointsRule, { WINNER_TYPE } from '../pointsRule.js';
 import Card, { CARD_SUITS, CARD_RANKS } from '../card.js';
 import Player from '../player.js';
+import Dealer from '../dealer.js';
 
 test('calculates points for a hand', (t) => {
   const points = PointsRule.calculatePoints([
@@ -63,7 +64,7 @@ test('decides if the hand is not a bust', (t) => {
 
 test('decides winner with player winning by points', (t) => {
   const player = new Player('Player');
-  const dealer = new Player('Dealer');
+  const dealer = new Dealer();
 
   player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
   player.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
@@ -73,6 +74,9 @@ test('decides winner with player winning by points', (t) => {
   dealer.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.DIAMONDS));
   dealer.addCard(new Card(CARD_RANKS.FOUR, CARD_SUITS.HEARTS));
 
+  player.updatePoints();
+  dealer.updatePoints();
+
   const winner = PointsRule.decideWinner(player, dealer);
 
   t.is(winner, WINNER_TYPE.PLAYER);
@@ -80,7 +84,7 @@ test('decides winner with player winning by points', (t) => {
 
 test('decides winner with a tie by points', (t) => {
   const player = new Player('Player');
-  const dealer = new Player('Dealer');
+  const dealer = new Dealer();
 
   player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
   player.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
@@ -90,6 +94,9 @@ test('decides winner with a tie by points', (t) => {
   dealer.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
   dealer.addCard(new Card(CARD_RANKS.THREE, CARD_SUITS.HEARTS));
 
+  player.updatePoints();
+  dealer.updatePoints();
+
   const winner = PointsRule.decideWinner(player, dealer);
 
   t.is(winner, WINNER_TYPE.TIE);
@@ -97,7 +104,7 @@ test('decides winner with a tie by points', (t) => {
 
 test('decides winner with the dealer winning by points', (t) => {
   const player = new Player('Player');
-  const dealer = new Player('Dealer');
+  const dealer = new Dealer();
 
   player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
   player.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
@@ -107,6 +114,9 @@ test('decides winner with the dealer winning by points', (t) => {
   dealer.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
   dealer.addCard(new Card(CARD_RANKS.FOUR, CARD_SUITS.HEARTS));
 
+  player.updatePoints();
+  dealer.updatePoints();
+
   const winner = PointsRule.decideWinner(player, dealer);
 
   t.is(winner, WINNER_TYPE.DEALER);
@@ -114,7 +124,7 @@ test('decides winner with the dealer winning by points', (t) => {
 
 test('decides winner with the player having a bust', (t) => {
   const player = new Player('Player');
-  const dealer = new Player('Dealer');
+  const dealer = new Dealer();
 
   player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
   player.addCard(new Card(CARD_RANKS.TEN, CARD_SUITS.HEARTS));
@@ -124,6 +134,9 @@ test('decides winner with the player having a bust', (t) => {
   dealer.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
   dealer.addCard(new Card(CARD_RANKS.FOUR, CARD_SUITS.HEARTS));
 
+  player.updatePoints();
+  dealer.updatePoints();
+
   const winner = PointsRule.decideWinner(player, dealer);
 
   t.is(winner, WINNER_TYPE.DEALER);
@@ -131,7 +144,7 @@ test('decides winner with the player having a bust', (t) => {
 
 test('decides winner with the dealer having a bust', (t) => {
   const player = new Player('Player');
-  const dealer = new Player('Dealer');
+  const dealer = new Dealer();
 
   player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
   player.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
@@ -141,6 +154,9 @@ test('decides winner with the dealer having a bust', (t) => {
   dealer.addCard(new Card(CARD_RANKS.TEN, CARD_SUITS.HEARTS));
   dealer.addCard(new Card(CARD_RANKS.FIVE, CARD_SUITS.HEARTS));
 
+  player.updatePoints();
+  dealer.updatePoints();
+
   const winner = PointsRule.decideWinner(player, dealer);
 
   t.is(winner, WINNER_TYPE.PLAYER);
@@ -148,13 +164,16 @@ test('decides winner with the dealer having a bust', (t) => {
 
 test('decides winner with the player having a blackjack', (t) => {
   const player = new Player('Player');
-  const dealer = new Player('Dealer');
+  const dealer = new Dealer();
 
   player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
   player.addCard(new Card(CARD_RANKS.K, CARD_SUITS.HEARTS));
 
   dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.DIAMONDS));
   dealer.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
+
+  player.updatePoints();
+  dealer.updatePoints();
 
   const winner = PointsRule.decideWinner(player, dealer);
 
@@ -163,13 +182,16 @@ test('decides winner with the player having a blackjack', (t) => {
 
 test('decides winner with the dealer having a blackjack', (t) => {
   const player = new Player('Player');
-  const dealer = new Player('Dealer');
+  const dealer = new Dealer();
 
   player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
   player.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
 
   dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.DIAMONDS));
   dealer.addCard(new Card(CARD_RANKS.K, CARD_SUITS.HEARTS));
+
+  player.updatePoints();
+  dealer.updatePoints();
 
   const winner = PointsRule.decideWinner(player, dealer);
 
@@ -178,13 +200,16 @@ test('decides winner with the dealer having a blackjack', (t) => {
 
 test('decides winner with the player having a blackjack and the dealer having a blackjack', (t) => {
   const player = new Player('Player');
-  const dealer = new Player('Dealer');
+  const dealer = new Dealer();
 
   player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
   player.addCard(new Card(CARD_RANKS.K, CARD_SUITS.HEARTS));
 
   dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.DIAMONDS));
   dealer.addCard(new Card(CARD_RANKS.K, CARD_SUITS.DIAMONDS));
+
+  player.updatePoints();
+  dealer.updatePoints();
 
   const winner = PointsRule.decideWinner(player, dealer);
 
@@ -197,6 +222,8 @@ test('decides if hand is a blackjack', (t) => {
   player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
   player.addCard(new Card(CARD_RANKS.K, CARD_SUITS.HEARTS));
 
+  player.updatePoints();
+
   const hasBlackjack = PointsRule.hasBlackjack(player);
 
   t.true(hasBlackjack);
@@ -207,6 +234,8 @@ test('decides if hand is not a blackjack', (t) => {
 
   player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
   player.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
+
+  player.updatePoints();
 
   const hasBlackjack = PointsRule.hasBlackjack(player);
 
@@ -220,6 +249,8 @@ test('decides if hand is a blackjack with more than two cards', (t) => {
   player.addCard(new Card(CARD_RANKS.K, CARD_SUITS.HEARTS));
   player.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
 
+  player.updatePoints();
+
   const hasBlackjack = PointsRule.hasBlackjack(player);
 
   t.false(hasBlackjack);
@@ -230,16 +261,20 @@ test('decides if hand is a blackjack with less than two cards', (t) => {
 
   player.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
 
+  player.updatePoints();
+
   const hasBlackjack = PointsRule.hasBlackjack(player);
 
   t.false(hasBlackjack);
 });
 
 test('decides if dealer should hit', (t) => {
-  const dealer = new Player('Dealer');
+  const dealer = new Dealer();
 
   dealer.addCard(new Card(CARD_RANKS.TEN, CARD_SUITS.HEARTS));
   dealer.addCard(new Card(CARD_RANKS.SIX, CARD_SUITS.HEARTS));
+
+  dealer.updatePoints();
 
   const shouldHit = PointsRule.shouldDealerHit(dealer);
 
@@ -247,10 +282,12 @@ test('decides if dealer should hit', (t) => {
 });
 
 test('decides if dealer should not hit with a soft 17', (t) => {
-  const dealer = new Player('Dealer');
+  const dealer = new Dealer();
 
   dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
   dealer.addCard(new Card(CARD_RANKS.SIX, CARD_SUITS.HEARTS));
+
+  dealer.updatePoints();
 
   const shouldHit = PointsRule.shouldDealerHit(dealer);
 
@@ -258,10 +295,12 @@ test('decides if dealer should not hit with a soft 17', (t) => {
 });
 
 test('decides if dealer should not hit', (t) => {
-  const dealer = new Player('Dealer');
+  const dealer = new Dealer();
 
   dealer.addCard(new Card(CARD_RANKS.TEN, CARD_SUITS.HEARTS));
   dealer.addCard(new Card(CARD_RANKS.SEVEN, CARD_SUITS.HEARTS));
+
+  dealer.updatePoints();
 
   const shouldHit = PointsRule.shouldDealerHit(dealer);
 
@@ -269,10 +308,12 @@ test('decides if dealer should not hit', (t) => {
 });
 
 test('decides if dealer should hit with two aces', (t) => {
-  const dealer = new Player('Dealer');
+  const dealer = new Dealer();
 
   dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
   dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.SPADES));
+
+  dealer.updatePoints();
 
   const shouldHit = PointsRule.shouldDealerHit(dealer);
 
@@ -280,11 +321,13 @@ test('decides if dealer should hit with two aces', (t) => {
 });
 
 test('decides if dealer should not hit with two aces', (t) => {
-  const dealer = new Player('Dealer');
+  const dealer = new Dealer();
 
   dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
   dealer.addCard(new Card(CARD_RANKS.TWO, CARD_SUITS.HEARTS));
   dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.SPADES));
+
+  dealer.updatePoints();
 
   const shouldHit = PointsRule.shouldDealerHit(dealer);
 
@@ -292,11 +335,13 @@ test('decides if dealer should not hit with two aces', (t) => {
 });
 
 test('decides if dealer should not hit with a soft 17 and two aces', (t) => {
-  const dealer = new Player('Dealer');
+  const dealer = new Dealer();
 
   dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.HEARTS));
   dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.SPADES));
   dealer.addCard(new Card(CARD_RANKS.FIVE, CARD_SUITS.HEARTS));
+
+  dealer.updatePoints();
 
   const shouldHit = PointsRule.shouldDealerHit(dealer);
 

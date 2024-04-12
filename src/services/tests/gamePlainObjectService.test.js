@@ -43,10 +43,12 @@ test('can convert a game to plain object', (t) => {
     player: {
       name: 'Test Player',
       hand: t.context.playerHand,
+      points: 13,
     },
     dealer: {
       name: 'Dealer',
       hand: t.context.dealerHandWithFacedownCard,
+      points: 15,
     },
     deck: t.context.deckCards,
     state: GAME_STATE.PLAYER_TURN,

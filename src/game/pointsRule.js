@@ -43,10 +43,7 @@ class PointsRule {
   static hasBlackjack(player) {
     const hand = player.handWithRevealedFacedownCard;
 
-    return (
-      hand.length === BASE_HAND_SIZE &&
-      this.calculatePoints(hand) === BLACKJACK_POINTS
-    );
+    return hand.length === BASE_HAND_SIZE && player.points === BLACKJACK_POINTS;
   }
 
   static shouldDealerHit(dealer) {

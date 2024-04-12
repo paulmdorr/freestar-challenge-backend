@@ -52,7 +52,7 @@ class Game {
   shouldEndPlayerTurn() {
     return (
       PointsRule.isBust(this.player.hand) ||
-      PointsRule.calculatePoints(this.player.hand) === BLACKJACK_POINTS
+      this.player.points === BLACKJACK_POINTS
     );
   }
 
