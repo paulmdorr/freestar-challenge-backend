@@ -70,7 +70,7 @@ test('GET /game/hit 400 when game over', async (t) => {
   t.is(res.body.message, 'Game is over');
 });
 
-test('GET /game/hold', async (t) => {
+test('GET /game/stand', async (t) => {
   let { header, body } = await request(t.context.server)
     .post('/game/start')
     .send({ playerName: 'Player 1' });
@@ -85,7 +85,7 @@ test('GET /game/hold', async (t) => {
   }
 
   const res = await request(t.context.server)
-    .post('/game/hold')
+    .post('/game/stand')
     .send({ playerName: 'Player 1' })
     .set('Cookie', [...header['set-cookie']]);
 
@@ -93,7 +93,7 @@ test('GET /game/hold', async (t) => {
   t.is(res.body.game.state, GAME_STATE.GAME_OVER);
 });
 
-test('GET /game/hold 400 when game over', async (t) => {
+test('GET /game/stand 400 when game over', async (t) => {
   let { header, body } = await request(t.context.server)
     .post('/game/start')
     .send({ playerName: 'Player 1' });
@@ -108,7 +108,7 @@ test('GET /game/hold 400 when game over', async (t) => {
   }
 
   const res = await request(t.context.server)
-    .post('/game/hold')
+    .post('/game/stand')
     .send({ playerName: 'Player 1' })
     .set('Cookie', [...header['set-cookie']]);
 

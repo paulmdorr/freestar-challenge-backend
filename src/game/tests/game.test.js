@@ -29,11 +29,11 @@ test('player can hit', (t) => {
   t.is(game.player.hand.length, 3);
 });
 
-test('player can hold', (t) => {
+test('player can stand', (t) => {
   const game = new Game();
   game.initialiseGame('Test Player', TrickBustDeckFactory);
 
-  game.playerHold();
+  game.playerStand();
 
   t.is(game.player.hand.length, 2);
   t.is(game.state, GAME_STATE.GAME_OVER);
@@ -66,11 +66,11 @@ test("player hits and it's not a bust", (t) => {
   t.is(game.state, GAME_STATE.PLAYER_TURN);
 });
 
-test('player holds and dealer wins', (t) => {
+test('player stands and dealer wins', (t) => {
   const game = new Game();
   game.initialiseGame('Test Player', TrickDealerWinsDeckFactory);
 
-  game.playerHold();
+  game.playerStand();
 
   t.is(game.state, GAME_STATE.GAME_OVER);
   t.is(game.winner, WINNER_TYPE.DEALER);
@@ -86,11 +86,11 @@ test('player hits and wins', (t) => {
   t.is(game.winner, WINNER_TYPE.PLAYER);
 });
 
-test("player holds and it's a tie", (t) => {
+test("player stands and it's a tie", (t) => {
   const game = new Game();
   game.initialiseGame('Test Player', TrickTieDeckFactory);
 
-  game.playerHold();
+  game.playerStand();
 
   t.is(game.state, GAME_STATE.GAME_OVER);
   t.is(game.winner, WINNER_TYPE.TIE);
@@ -134,7 +134,7 @@ test("player can't hit if game is over", (t) => {
   t.is(error.message, 'Game is over');
 });
 
-test("player can't hold if game is over", (t) => {
+test("player can't stand if game is over", (t) => {
   const gameBuilder = new GameBuilder();
   const game = gameBuilder
     .setPlayer('Player 1')
@@ -143,7 +143,7 @@ test("player can't hold if game is over", (t) => {
     .setDeck(DeckFactory)
     .build();
 
-  const error = t.throws(() => game.playerHold());
+  const error = t.throws(() => game.playerStand());
 
   t.is(error.message, 'Game is over');
 });
@@ -165,7 +165,7 @@ test("player can't hit if it's dealer turn", (t) => {
   t.is(error.message, "It is the dealer's turn");
 });
 
-test("player can't hold if it's player turn", (t) => {
+test("player can't stand if it's player turn", (t) => {
   const gameBuilder = new GameBuilder();
   const game = gameBuilder
     .setPlayer('Player 1')
@@ -177,7 +177,7 @@ test("player can't hold if it's player turn", (t) => {
     .setDeck(DeckFactory)
     .build();
 
-  const error = t.throws(() => game.playerHold());
+  const error = t.throws(() => game.playerStand());
 
   t.is(error.message, "It is the dealer's turn");
 });

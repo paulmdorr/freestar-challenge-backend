@@ -15,10 +15,10 @@ function playerHit(game) {
   return gameToPlainObject(game);
 }
 
-function playerHold(game) {
-  game.playerHold();
+function playerStand(game) {
+  game.playerStand();
 
   return gameToPlainObject(game);
 }
 
-export { createNewGame, playerHit, playerHold };
+export { createNewGame, playerHit, playerStand };

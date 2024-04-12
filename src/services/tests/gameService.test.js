@@ -1,5 +1,5 @@
 import test from 'ava';
-import { createNewGame, playerHit, playerHold } from '../gameService.js';
+import { createNewGame, playerHit, playerStand } from '../gameService.js';
 import Game, { GAME_STATE } from '../../game/game.js';
 import TrickPlayerWinsDeckFactory from '../../game/tests/helpers/trickPlayerWinsDeckFactory.js';
 
@@ -22,11 +22,11 @@ test('player can hit', (t) => {
   t.is(game.player.hand.length, 3);
 });
 
-test('player can hold', (t) => {
+test('player can stand', (t) => {
   const game = new Game();
   game.initialiseGame('Test Player', TrickPlayerWinsDeckFactory);
 
-  playerHold(game);
+  playerStand(game);
 
   t.is(game.state, GAME_STATE.GAME_OVER);
 });

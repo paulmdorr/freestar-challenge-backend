@@ -1,7 +1,7 @@
 import {
   createNewGame,
   playerHit,
-  playerHold,
+  playerStand,
 } from '../services/gameService.js';
 import { plainObjectToGame } from '../services/gamePlainObjectService.js';
 import { GAME_STATE } from '../game/game.js';
@@ -33,9 +33,9 @@ function hit(req, res) {
   }
 }
 
-function hold(req, res) {
+function stand(req, res) {
   try {
-    const game = playerHold(req.game);
+    const game = playerStand(req.game);
 
     saveGameToSession(game, req.body.playerName, req.session);
 
@@ -83,4 +83,4 @@ function revealDealerHandIfGameIsOver(game) {
   return newGame;
 }
 
-export { startGame, hit, hold, getGameFromSession };
+export { startGame, hit, stand, getGameFromSession };

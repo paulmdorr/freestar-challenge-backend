@@ -38,11 +38,11 @@ class Game {
     this.dealer.dealCard(this.player, this.#deck);
 
     if (this.shouldEndPlayerTurn()) {
-      this.playerHold();
+      this.playerStand();
     }
   }
 
-  playerHold() {
+  playerStand() {
     this.#checkIfGameIsOver(this.state);
     this.#checkIfDealerTurn(this.state);
     this.state = GAME_STATE.DEALER_TURN;
