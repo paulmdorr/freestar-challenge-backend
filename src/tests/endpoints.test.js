@@ -47,12 +47,35 @@ test('GET /game/hit', async (t) => {
   t.is(res.body.game.player.hand.length, 3);
 });
 
-test('GET /game/hold', async (t) => {
+test('GET /game/hit 400 when game over', async (t) => {
   let { header, body } = await request(t.context.server)
     .post('/game/start')
     .send({ playerName: 'Player 1' });
 
   //The game could end on the first hit, so we need to loop until the game is not over
+  while (body.game.state !== GAME_STATE.GAME_OVER) {
+    const gameRes = await request(t.context.server)
+      .post('/game/start')
+      .send({ playerName: 'Player 1' });
+    header = gameRes.header;
+    body = gameRes.body;
+  }
+
+  const res = await request(t.context.server)
+    .post('/game/hit')
+    .send({ playerName: 'Player 1' })
+    .set('Cookie', [...header['set-cookie']]);
+
+  t.is(res.status, 400);
+  t.is(res.body.message, 'Game is over');
+});
+
+test('GET /game/hold', async (t) => {
+  let { header, body } = await request(t.context.server)
+    .post('/game/start')
+    .send({ playerName: 'Player 1' });
+
+  //The game could end on the first hit, so we need to loop until the game is over
   while (body.game.state === GAME_STATE.GAME_OVER) {
     const gameRes = await request(t.context.server)
       .post('/game/start')
@@ -68,6 +91,43 @@ test('GET /game/hold', async (t) => {
 
   t.is(res.status, 200);
   t.is(res.body.game.state, GAME_STATE.GAME_OVER);
+});
+
+test('GET /game/hold 400 when game over', async (t) => {
+  let { header, body } = await request(t.context.server)
+    .post('/game/start')
+    .send({ playerName: 'Player 1' });
+
+  //The game could end on the first hit, so we need to loop until the game is over
+  while (body.game.state !== GAME_STATE.GAME_OVER) {
+    const gameRes = await request(t.context.server)
+      .post('/game/start')
+      .send({ playerName: 'Player 1' });
+    header = gameRes.header;
+    body = gameRes.body;
+  }
+
+  const res = await request(t.context.server)
+    .post('/game/hold')
+    .send({ playerName: 'Player 1' })
+    .set('Cookie', [...header['set-cookie']]);
+
+  t.is(res.status, 400);
+  t.is(res.body.message, 'Game is over');
+});
+
+test('GET /game/hit game not found', async (t) => {
+  let { header } = await request(t.context.server)
+    .post('/game/start')
+    .send({ playerName: 'Player 1' });
+
+  const res = await request(t.context.server)
+    .post('/game/hit')
+    .send({ playerName: 'Wrong Player' })
+    .set('Cookie', [...header['set-cookie']]);
+
+  t.is(res.status, 404);
+  t.is(res.body.message, 'Game not found');
 });
 
 test.after((t) => {

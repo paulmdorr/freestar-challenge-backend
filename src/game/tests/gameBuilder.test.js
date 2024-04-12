@@ -2,6 +2,7 @@ import test from 'ava';
 import GameBuilder from '../gameBuilder.js';
 import { CARD_RANKS, CARD_SUITS } from '../card.js';
 import DeckFactory from '../deckFactory.js';
+import { WINNER_TYPE } from '../pointsRule.js';
 
 test.before((t) => {
   t.context.playerHand = [
@@ -109,10 +110,12 @@ test('can build a game with a predefined deck, player and dealer hand, and a sta
     .setDealer(t.context.dealerHand)
     .setState('GAME_OVER')
     .setDeck(DeckFactory, t.context.deckCards)
+    .setWinner(WINNER_TYPE.PLAYER)
     .build();
 
   t.is(game.player.name, 'Test Player');
   t.is(game.dealer.name, 'Dealer');
+  t.is(game.winner, WINNER_TYPE.PLAYER);
   t.deepEqual(game.player.hand.length, 2);
   t.deepEqual(game.player.hand[0].rank, CARD_RANKS.A);
   t.deepEqual(game.player.hand[0].suit, CARD_SUITS.SPADES);

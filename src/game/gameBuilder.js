@@ -31,6 +31,12 @@ class GameBuilder {
     return this;
   }
 
+  setWinner(winner) {
+    this.game.winner = winner;
+
+    return this;
+  }
+
   build() {
     return this.game;
   }
