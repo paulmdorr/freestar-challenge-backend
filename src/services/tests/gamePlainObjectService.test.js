@@ -8,6 +8,7 @@ import { CARD_RANKS, CARD_SUITS } from '../../game/card.js';
 import { GAME_STATE } from '../../game/game.js';
 import DeckFactory from '../../game/deckFactory.js';
 import FaceDownCard from '../../game/faceDownCard.js';
+import { WINNER_TYPE } from '../../game/pointsRule.js';
 
 test.before((t) => {
   t.context.playerHand = [
@@ -35,6 +36,7 @@ test('can convert a game to plain object', (t) => {
     .setDealer(t.context.dealerHand)
     .setState(GAME_STATE.PLAYER_TURN)
     .setDeck(DeckFactory, t.context.deckCards)
+    .setWinner(WINNER_TYPE.PLAYER)
     .build();
 
   const expected = {
@@ -48,6 +50,7 @@ test('can convert a game to plain object', (t) => {
     },
     deck: t.context.deckCards,
     state: GAME_STATE.PLAYER_TURN,
+    winner: WINNER_TYPE.PLAYER,
   };
 
   const actual = gameToPlainObject(game);
@@ -62,6 +65,7 @@ test('can convert a plain object to a game', (t) => {
     .setDealer(t.context.dealerHand)
     .setState(GAME_STATE.PLAYER_TURN)
     .setDeck(DeckFactory, t.context.deckCards)
+    .setWinner(WINNER_TYPE.PLAYER)
     .build();
 
   const plainObject = gameToPlainObject(game);

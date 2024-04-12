@@ -15,6 +15,7 @@ function gameToPlainObject(game) {
     },
     deck: game.deck.cards.map(cardToPlainObject),
     state: game.state,
+    winner: game.winner,
   };
 }
 
@@ -44,6 +45,7 @@ function plainObjectToGame(plainObject) {
     .setDealer(plainObject.dealer.hand.map(plainObjectToCard))
     .setState(plainObject.state)
     .setDeck(DeckFactory, plainObject.deck.map(plainObjectToCard))
+    .setWinner(plainObject.winner)
     .build();
 }
 
