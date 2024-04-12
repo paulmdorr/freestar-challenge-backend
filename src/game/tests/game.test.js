@@ -22,7 +22,7 @@ test('can create a game', (t) => {
 
 test('player can hit', (t) => {
   const game = new Game();
-  game.initialiseGame('Test Player', DeckFactory);
+  game.initialiseGame('Test Player', TrickPlayerWinsDeckFactory);
 
   game.playerHit();
 

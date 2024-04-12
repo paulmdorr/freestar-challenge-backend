@@ -1,7 +1,6 @@
 import test from 'ava';
 import { createNewGame, playerHit, playerHold } from '../gameService.js';
 import Game, { GAME_STATE } from '../../game/game.js';
-import DeckFactory from '../../game/deckFactory.js';
 import TrickPlayerWinsDeckFactory from '../../game/tests/helpers/trickPlayerWinsDeckFactory.js';
 
 test('can create a game and returns a plain object representation', (t) => {
@@ -16,7 +15,7 @@ test('can create a game and returns a plain object representation', (t) => {
 
 test('player can hit', (t) => {
   const game = new Game();
-  game.initialiseGame('Test Player', DeckFactory);
+  game.initialiseGame('Test Player', TrickPlayerWinsDeckFactory);
 
   playerHit(game);
 
