@@ -77,6 +77,7 @@ function revealDealerHandIfGameIsOver(game) {
       rank: null,
       suit: null,
     };
+    newGame.dealer.points = null;
   }
 
   return newGame;

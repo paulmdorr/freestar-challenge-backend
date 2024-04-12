@@ -61,22 +61,8 @@ class Game {
       this.dealer.dealCard(this.dealer, this.#deck);
     }
 
-    if (
-      PointsRule.isBust(this.player.hand) ||
-      this.dealer.winsByPoints(this.player)
-    ) {
-      this.state = GAME_STATE.GAME_OVER;
-      this.winner = WINNER_TYPE.DEALER;
-    } else if (
-      PointsRule.isBust(this.dealer.handWithRevealedFacedownCard) ||
-      this.player.winsByPoints(this.dealer)
-    ) {
-      this.state = GAME_STATE.GAME_OVER;
-      this.winner = WINNER_TYPE.PLAYER;
-    } else {
-      this.state = GAME_STATE.GAME_OVER;
-      this.winner = WINNER_TYPE.TIE;
-    }
+    this.state = GAME_STATE.GAME_OVER;
+    this.winner = PointsRule.decideWinner(this.player, this.dealer);
   }
 
   get deck() {

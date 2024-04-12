@@ -198,6 +198,26 @@ test('decides winner with the dealer having a blackjack', (t) => {
   t.is(winner, WINNER_TYPE.DEALER);
 });
 
+test('decides winner with the dealer having 22 points', (t) => {
+  const player = new Player('Player');
+  const dealer = new Dealer();
+
+  player.addCard(new Card(CARD_RANKS.TEN, CARD_SUITS.HEARTS));
+  player.addCard(new Card(CARD_RANKS.K, CARD_SUITS.HEARTS));
+
+  dealer.addCard(new Card(CARD_RANKS.A, CARD_SUITS.DIAMONDS));
+  dealer.addCard(new Card(CARD_RANKS.THREE, CARD_SUITS.HEARTS));
+  dealer.addCard(new Card(CARD_RANKS.TEN, CARD_SUITS.HEARTS));
+  dealer.addCard(new Card(CARD_RANKS.EIGHT, CARD_SUITS.HEARTS));
+
+  player.updatePoints();
+  dealer.updatePoints();
+
+  const winner = PointsRule.decideWinner(player, dealer);
+
+  t.is(winner, WINNER_TYPE.PLAYER);
+});
+
 test('decides winner with the player having a blackjack and the dealer having a blackjack', (t) => {
   const player = new Player('Player');
   const dealer = new Dealer();
